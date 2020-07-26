@@ -1,29 +1,61 @@
 import React, { useState } from 'react';
 
 import {
-  SafeAreaView,
   StyleSheet,
   TextInput,
   ScrollView,
   View,
   Text,
   StatusBar,
+  Pressable
 } from 'react-native';
 
 export default function Login(){
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [error, setError] = useState('');
+
+	const handleSignInPress = async () => {
+
+		if(password.length < 6){ 
+
+			setError('The password needs to have at least 6 chars'); 
+
+		}else{
+
+
+		}
+
+	};
+
+	const handleEmail = (email) => {
+		setEmail(email);
+	};
+
+	const handlePassword = (password) => {
+		setPassword(password);
+	};
 
 	return (
 
 		<View style={styles.container}>
 
-			<TextInput onChangeText={text => setEmail(text)} value={email} />
+			<TextInput onChangeText={handleEmail} value={email} />
 			
-			<TextInput onChangeText={text => setPassword(text)} value={password} />
+			<TextInput onChangeText={handlePassword} value={password} />
+
+			{ error.length !== 0 && <Text> { error } </Text> }
+
+			<Pressable onPress={handleSignInPress} disabled={!email && !password} 
+				testID="loginButton">
+				
+				<Text style={styles.button}>Login</Text>
+
+			</Pressable>
 
 		</View>
+
 	);
 }
 
@@ -37,6 +69,9 @@ const styles = StyleSheet.create({
 	  justifyContent: 'center',
 	  backgroundColor: 'darkviolet',
 	},
+	button: {
+		fontSize: 16
+	}
 
 });
 
