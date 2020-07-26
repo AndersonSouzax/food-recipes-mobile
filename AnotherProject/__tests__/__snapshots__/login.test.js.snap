@@ -1,5 +1,118 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`correctly accepts the credentials cleans any error presented 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "darkviolet",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    onKeyPress={[Function]}
+    rejectResponderTermination={true}
+    underlineColorAndroid="transparent"
+    value="a"
+  />
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    onKeyPress={[Function]}
+    rejectResponderTermination={true}
+    underlineColorAndroid="transparent"
+    value="d"
+  />
+  <Text>
+     
+    The password needs to have at least 6 chars
+     
+  </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="loginButton"
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 16,
+        }
+      }
+    >
+      Login
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`correctly accepts the credentials cleans any error presented 2`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "darkviolet",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    onKeyPress={[Function]}
+    rejectResponderTermination={true}
+    underlineColorAndroid="transparent"
+    value="a"
+  />
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    onKeyPress={[Function]}
+    rejectResponderTermination={true}
+    underlineColorAndroid="transparent"
+    value="d"
+  />
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="loginButton"
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 16,
+        }
+      }
+    >
+      Login
+    </Text>
+  </View>
+</View>
+`;
+
 exports[`renders correctly 1`] = `
 <View
   style={
@@ -14,6 +127,7 @@ exports[`renders correctly 1`] = `
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
+    onKeyPress={[Function]}
     rejectResponderTermination={true}
     underlineColorAndroid="transparent"
     value=""
@@ -21,6 +135,7 @@ exports[`renders correctly 1`] = `
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
+    onKeyPress={[Function]}
     rejectResponderTermination={true}
     underlineColorAndroid="transparent"
     value=""
@@ -52,7 +167,7 @@ exports[`renders correctly 1`] = `
 </View>
 `;
 
-exports[`tries to log in the user short password error message is show 1`] = `
+exports[`tries to log in the user short password error message is shown 1`] = `
 <View
   style={
     Object {
@@ -66,6 +181,7 @@ exports[`tries to log in the user short password error message is show 1`] = `
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
+    onKeyPress={[Function]}
     rejectResponderTermination={true}
     underlineColorAndroid="transparent"
     value="a"
@@ -73,6 +189,7 @@ exports[`tries to log in the user short password error message is show 1`] = `
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
+    onKeyPress={[Function]}
     rejectResponderTermination={true}
     underlineColorAndroid="transparent"
     value="d"

@@ -37,13 +37,23 @@ export default function Login(){
 		setPassword(password);
 	};
 
+	const handleKeyPress = () => {
+
+		if(error.length !== 0){
+			setError('');
+		}
+
+	};
+
 	return (
 
 		<View style={styles.container}>
 
-			<TextInput onChangeText={handleEmail} value={email} />
+			<TextInput onKeyPress={handleKeyPress} onChangeText={handleEmail} 
+				value={email} />
 			
-			<TextInput onChangeText={handlePassword} value={password} />
+			<TextInput onKeyPress={handleKeyPress} onChangeText={handlePassword} 
+				value={password} />
 
 			{ error.length !== 0 && <Text> { error } </Text> }
 

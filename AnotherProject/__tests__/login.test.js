@@ -6,11 +6,8 @@ import Login from '../src/login';
 import { create, act } from 'react-test-renderer';
 
 test('renders correctly', () => {
-
   const component = create(<Login />).toJSON();
-
   expect(component).toMatchSnapshot();
-
 });
 
 describe('correctly accepts the credentials', () => {
@@ -24,21 +21,40 @@ describe('correctly accepts the credentials', () => {
 	const password = texts[1];
 
 	test('correctly assign the credentials', () => {
-
 		// user email
 		act(() => { email.props.onChangeText('abc'); });
 		// user password
 		act(() => { password.props.onChangeText('def'); });
 
 		expect(email.props.value).toBe('abc');
-
 		expect(password.props.value).toBe('def');
 
 	});
 
-	test('', () => {
+	test('cleans any error presented', async () => {
 
-		
+		expect.assertions(2);
+
+		const loginButton = component.root.findByProps({ testID : 'loginButton' });
+
+		/*User inputing... */
+		// user email
+		act(() => { email.props.onChangeText('a'); });
+		// user password
+		act(() => { password.props.onChangeText('d'); });
+		// Submits the form...
+		act(() => { loginButton.props.onPress(); });
+
+		// Error message is displayed
+		let tree = component.toJSON();
+		expect(tree).toMatchSnapshot();
+
+		act(() => { email.props.onKeyPress(); });
+
+		// Error message is hidden
+		tree = component.toJSON();
+		expect(tree).toMatchSnapshot();
+
 	});
 
 });
