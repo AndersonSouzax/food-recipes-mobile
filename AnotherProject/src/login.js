@@ -10,9 +10,11 @@ import {
   Pressable
 } from 'react-native';
 
+import API from './services/api';
+
 export default function Login(){
 
-	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 
@@ -24,13 +26,13 @@ export default function Login(){
 
 		}else{
 
-
+			const response = await API.login({ username, password });
 		}
 
 	};
 
-	const handleEmail = (email) => {
-		setEmail(email);
+	const handleUsername = (username) => {
+		setUsername(username);
 	};
 
 	const handlePassword = (password) => {
@@ -49,15 +51,15 @@ export default function Login(){
 
 		<View style={styles.container}>
 
-			<TextInput onKeyPress={handleKeyPress} onChangeText={handleEmail} 
-				value={email} />
+			<TextInput onKeyPress={handleKeyPress} onChangeText={handleUsername} 
+				value={username} />
 			
 			<TextInput onKeyPress={handleKeyPress} onChangeText={handlePassword} 
 				value={password} />
 
 			{ error.length !== 0 && <Text> { error } </Text> }
 
-			<Pressable onPress={handleSignInPress} disabled={!email && !password} 
+			<Pressable onPress={handleSignInPress} disabled={!username && !password} 
 				testID="loginButton">
 				
 				<Text style={styles.button}>Login</Text>

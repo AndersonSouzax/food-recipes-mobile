@@ -5,6 +5,10 @@ import Login from '../src/login';
 
 import { create, act } from 'react-test-renderer';
 
+import { login } from '../__mocks__/api_mock';
+
+jest.mock('../src/services/api');
+
 test('renders correctly', () => {
   const component = create(<Login />).toJSON();
   expect(component).toMatchSnapshot();
@@ -45,7 +49,7 @@ describe('correctly accepts the credentials', () => {
 		// Submits the form...
 		act(() => { loginButton.props.onPress(); });
 
-		// Error message is displayed
+		// Short password error message is displayed
 		let tree = component.toJSON();
 		expect(tree).toMatchSnapshot();
 
@@ -98,7 +102,7 @@ describe('tries to log in the user', () => {
 	act(() => { email.props.onChangeText('a'); });
 	act(() => { password.props.onChangeText('d'); });
 
-	test('short password error message is shown', async () => {
+	test('short password error message is displayed', async () => {
 
 		expect.assertions(1);
 
@@ -109,8 +113,18 @@ describe('tries to log in the user', () => {
 
 		expect(tree).toMatchSnapshot();
 
-//		act(() => { password.props.onChangeText('anderson'); });
+	});
 
+	// Invalid password input
+	act(() => { password.props.onChangeText('andinnnn'); });
+
+	test('Invalid username or password error is displayed', async () => {
+
+		expect.assertions(2);
+
+		act(() => { loginButton.props.onPress(); });
+
+				
 	});
 
 });

@@ -192,13 +192,8 @@ exports[`tries to log in the user short password error message is shown 1`] = `
     onKeyPress={[Function]}
     rejectResponderTermination={true}
     underlineColorAndroid="transparent"
-    value="d"
+    value="anderson"
   />
-  <Text>
-     
-    The password needs to have at least 6 chars
-     
-  </Text>
   <View
     accessible={true}
     focusable={true}
