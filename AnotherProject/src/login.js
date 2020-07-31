@@ -26,7 +26,16 @@ export default function Login(){
 
 		}else{
 
-			const response = await API.login({ username, password });
+			try{
+
+				const response = await API.login({ username, password });
+
+			}catch(e){
+				
+				setError('Login error, check your credentials and try again..');
+
+			}
+			
 		}
 
 	};
@@ -57,7 +66,7 @@ export default function Login(){
 			<TextInput onKeyPress={handleKeyPress} onChangeText={handlePassword} 
 				value={password} />
 
-			{ error.length !== 0 && <Text> { error } </Text> }
+			{ error.length !== 0 && <Text testID="error"> { error } </Text> }
 
 			<Pressable onPress={handleSignInPress} disabled={!username && !password} 
 				testID="loginButton">

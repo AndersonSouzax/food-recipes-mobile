@@ -27,7 +27,9 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
     underlineColorAndroid="transparent"
     value="d"
   />
-  <Text>
+  <Text
+    testID="error"
+  >
      
     The password needs to have at least 6 chars
      
@@ -167,7 +169,7 @@ exports[`renders correctly 1`] = `
 </View>
 `;
 
-exports[`tries to log in the user short password error message is shown 1`] = `
+exports[`tries to log in the user short password error message is displayed 1`] = `
 <View
   style={
     Object {
@@ -192,8 +194,15 @@ exports[`tries to log in the user short password error message is shown 1`] = `
     onKeyPress={[Function]}
     rejectResponderTermination={true}
     underlineColorAndroid="transparent"
-    value="anderson"
+    value="d"
   />
+  <Text
+    testID="error"
+  >
+     
+    The password needs to have at least 6 chars
+     
+  </Text>
   <View
     accessible={true}
     focusable={true}

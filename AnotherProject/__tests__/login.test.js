@@ -5,8 +5,6 @@ import Login from '../src/login';
 
 import { create, act } from 'react-test-renderer';
 
-import { login } from '../__mocks__/api_mock';
-
 jest.mock('../src/services/api');
 
 test('renders correctly', () => {
@@ -98,16 +96,16 @@ describe('tries to log in the user', () => {
 	const email = inputs[0];
 	const password = inputs[1];
 
-	/* Enters with user informations..  */
-	act(() => { email.props.onChangeText('a'); });
-	act(() => { password.props.onChangeText('d'); });
-
 	test('short password error message is displayed', async () => {
+
+		/* Enters with user informations..  */
+		act(() => { email.props.onChangeText('a'); });
+		act(() => { password.props.onChangeText('d'); });
 
 		expect.assertions(1);
 
 		// Submits the form...
-		act(() => { loginButton.props.onPress(); });
+		await act(async () => { await loginButton.props.onPress(); });
 
 		let tree = component.toJSON();
 
@@ -115,16 +113,23 @@ describe('tries to log in the user', () => {
 
 	});
 
-	// Invalid password input
-	act(() => { password.props.onChangeText('andinnnn'); });
+
 
 	test('Invalid username or password error is displayed', async () => {
 
-		expect.assertions(2);
+		act(() => { password.props.onKeyPress(); })
 
-		act(() => { loginButton.props.onPress(); });
+		// Invalid password input
+		act(() => { password.props.onChangeText('andinnnn'); });
 
-				
+		expect.assertions(1);
+
+		await act(async () => { await loginButton.props.onPress(); });
+
+		const errorText = component.root.findAllByProps({ testID : 'error' });
+
+	  expect(errorText).not.toHaveLength(0);
+
 	});
 
 });
