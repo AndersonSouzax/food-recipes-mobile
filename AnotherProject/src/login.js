@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 
-import {
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Pressable
+import { 
+	StyleSheet, 
+	TextInput, 
+	ScrollView, 
+	View, 
+	Text, 
+	StatusBar,
+	Pressable 
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import API from './services/api';
 
-export default function Login(){
+export default function Login({ navigation }){
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -29,6 +32,17 @@ export default function Login(){
 			try{
 
 				const response = await API.login({ username, password });
+
+				await AsyncStorage.setItem('FoodRecipeToken', response.data.token);
+
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Main' }),
+          ],
+        });
+
+        navigation.dispatch(resetAction);
 
 			}catch(e){
 				

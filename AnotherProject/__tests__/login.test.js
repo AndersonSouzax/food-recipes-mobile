@@ -96,7 +96,7 @@ describe('tries to log in the user', () => {
 	const email = inputs[0];
 	const password = inputs[1];
 
-	test('short password error message is displayed', async () => {
+	test('too short password was inserted', async () => {
 
 		/* Enters with user informations..  */
 		act(() => { email.props.onChangeText('a'); });
@@ -115,7 +115,7 @@ describe('tries to log in the user', () => {
 
 
 
-	test('Invalid username or password error is displayed', async () => {
+	test('Invalid username or password was inserted', async () => {
 
 		act(() => { password.props.onKeyPress(); })
 
@@ -129,6 +129,32 @@ describe('tries to log in the user', () => {
 		const errorText = component.root.findAllByProps({ testID : 'error' });
 
 	  expect(errorText).not.toHaveLength(0);
+
+	});
+
+	test('Successful authentication and redirection', async () => {
+
+		expect.assertions(1);
+
+		const navigationMock = { dispatch: jest.fn() };
+
+		act(() => { 
+			component = create(<Login navigation={navigationMock}/>); 
+		});
+
+		const inputs = component.root.findAllByType("TextInput");
+		const loginButton = component.root.findByProps({ testID : 'loginButton' });
+
+		const email = inputs[0];
+		const password = inputs[1];
+
+		// Inserting valid credential
+		act(() => { email.props.onChangeText('anderson'); });
+		act(() => { password.props.onChangeText('ddddddd'); });
+
+		await act(async () => { await loginButton.props.onPress(); });
+
+		expect(navigationMock.dispatch.mock.calls.length).toBe(1);
 
 	});
 

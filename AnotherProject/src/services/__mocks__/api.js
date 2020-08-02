@@ -5,7 +5,7 @@ class API {
   constructor(){
 
     this.users = {
-      'anderson': { token: '9340349njfnidfbuierf', name : 'And', id : 1}
+      'anderson': { data : { token: '9340349njfnidfbuierf', name : 'And', id : 1 } }
     };
 
   }
