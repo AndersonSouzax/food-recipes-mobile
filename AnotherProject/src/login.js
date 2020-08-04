@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
-import { StackActions, NavigationActions } from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
 
 import API from './services/api';
 
@@ -35,10 +35,10 @@ export default function Login({ navigation }){
 
 				await AsyncStorage.setItem('FoodRecipeToken', response.data.token);
 
-        const resetAction = StackActions.reset({
+        const resetAction = CommonActions.reset({
           index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Main' }),
+          routes: [
+            { name: 'Main' },
           ],
         });
 

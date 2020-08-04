@@ -13,8 +13,5 @@ module.exports = {
         inlineRequires: false,
       },
     }),
-  },
-  resolver: {
-      assetExts: [assetExts, 'txt', 'xml', 'png', 'jpg', 'pb', 'tflite'],
-   }
+  }
 };
