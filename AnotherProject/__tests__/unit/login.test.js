@@ -1,11 +1,11 @@
 import 'react-native';
 import React from 'react';
 
-import Login from '../src/login';
+import Login from '../../src/login';
 
 import { create, act } from 'react-test-renderer';
 
-jest.mock('../src/services/api');
+jest.mock('../../src/services/api');
 
 test('renders correctly', () => {
   const component = create(<Login />).toJSON();
