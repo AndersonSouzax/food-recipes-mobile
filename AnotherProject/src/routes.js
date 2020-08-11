@@ -12,9 +12,9 @@ const Stack = createStackNavigator();
 export default function Routes () {
 	return ( 
 		<NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-      </Stack.Navigator>
-    </NavigationContainer>
-    );
+		  <Stack.Navigator>
+			<Stack.Screen name="Login" component={Login} />
+		  </Stack.Navigator>
+		</NavigationContainer>
+	);
  };

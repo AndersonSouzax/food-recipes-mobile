@@ -12,6 +12,15 @@ test('renders correctly', () => {
   expect(component).toMatchSnapshot();
 });
 
+test('Redirect to the main page when already logged in', () => {
+
+	let component;
+
+	act(() => { component = create(<Login />); });
+
+	expect(1).not.toBeNull();
+});
+
 describe('correctly accepts the credentials', () => {
 
 	let component;

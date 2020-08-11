@@ -14,8 +14,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { CommonActions } from '@react-navigation/native';
 
 import API from './services/api';
+import { useAsyncStorage } from './custom-hooks';
 
 export default function Login({ navigation }){
+
+	const user = useAsyncStorage();
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -35,14 +38,7 @@ export default function Login({ navigation }){
 
 				await AsyncStorage.setItem('FoodRecipeToken', response.data.token);
 
-        const resetAction = CommonActions.reset({
-          index: 0,
-          routes: [
-            { name: 'Main' },
-          ],
-        });
-
-        navigation.dispatch(resetAction);
+        toMainPage();
 
 			}catch(e){
 				
@@ -51,6 +47,19 @@ export default function Login({ navigation }){
 			}
 			
 		}
+
+	};
+
+	const toMainPage = () => {
+    
+    const resetAction = CommonActions.reset({
+      index: 0,
+      routes: [
+        { name: 'Main' },
+      ],
+    });
+
+    navigation.dispatch(resetAction);
 
 	};
 
@@ -102,7 +111,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	  alignItems: 'center',
 	  justifyContent: 'center',
-	  backgroundColor: 'darkviolet',
+	  backgroundColor: 'white',
 	},
 	button: {
 		fontSize: 16

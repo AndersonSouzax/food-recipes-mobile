@@ -5,7 +5,7 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "darkviolet",
+      "backgroundColor": "white",
       "flex": 1,
       "justifyContent": "center",
     }
@@ -66,7 +66,7 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "darkviolet",
+      "backgroundColor": "white",
       "flex": 1,
       "justifyContent": "center",
     }
@@ -120,7 +120,7 @@ exports[`renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "darkviolet",
+      "backgroundColor": "white",
       "flex": 1,
       "justifyContent": "center",
     }
@@ -174,7 +174,7 @@ exports[`tries to log in the user too short password was inserted 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "darkviolet",
+      "backgroundColor": "white",
       "flex": 1,
       "justifyContent": "center",
     }
