@@ -6,19 +6,11 @@ import Login from '../../src/login';
 import { create, act } from 'react-test-renderer';
 
 jest.mock('../../src/services/api');
+jest.mock('../../src/custom-hooks');
 
 test('renders correctly', () => {
   const component = create(<Login />).toJSON();
   expect(component).toMatchSnapshot();
-});
-
-test('Redirect to the main page when already logged in', () => {
-
-	let component;
-
-	act(() => { component = create(<Login />); });
-
-	expect(1).not.toBeNull();
 });
 
 describe('correctly accepts the credentials', () => {
@@ -97,7 +89,9 @@ describe('tries to log in the user', () => {
 
 	let component;
 
-	act(() => { component = create(<Login />); });
+	const navigationMock = { dispatch: jest.fn() };
+
+	act(() => { component = create(<Login navigation={navigationMock}/>); });
 
 	const inputs = component.root.findAllByType("TextInput");
 	const loginButton = component.root.findByProps({ testID : 'loginButton' });
@@ -144,8 +138,6 @@ describe('tries to log in the user', () => {
 	test('Successful authentication and redirection', async () => {
 
 		expect.assertions(1);
-
-		const navigationMock = { dispatch: jest.fn() };
 
 		act(() => { 
 			component = create(<Login navigation={navigationMock}/>); 

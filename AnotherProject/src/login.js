@@ -19,6 +19,18 @@ import { useAsyncStorage } from './custom-hooks';
 export default function Login({ navigation }){
 
 	const user = useAsyncStorage();
+	
+	if(user){ 
+		
+		const resetAction = CommonActions.reset({
+      index: 0,
+      routes: [
+        { name: 'Main' },
+      ],
+    });
+
+		navigation.dispatch(resetAction);
+	}
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -38,29 +50,19 @@ export default function Login({ navigation }){
 
 				await AsyncStorage.setItem('FoodRecipeToken', response.data.token);
 
-        toMainPage();
+		    const resetAction = CommonActions.reset({
+		      index: 0,
+		      routes: [
+		        { name: 'Main' },
+		      ],
+		    });
+
+    		navigation.dispatch(resetAction);
 
 			}catch(e){
-				
 				setError('Login error, check your credentials and try again..');
-
-			}
-			
+			}	
 		}
-
-	};
-
-	const toMainPage = () => {
-    
-    const resetAction = CommonActions.reset({
-      index: 0,
-      routes: [
-        { name: 'Main' },
-      ],
-    });
-
-    navigation.dispatch(resetAction);
-
 	};
 
 	const handleUsername = (username) => {
