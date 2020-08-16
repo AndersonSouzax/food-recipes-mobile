@@ -6,11 +6,20 @@ import Login from '../../src/login';
 import { create, act } from 'react-test-renderer';
 
 jest.mock('../../src/services/api');
-jest.mock('../../src/custom-hooks');
 
 test('renders correctly', () => {
   const component = create(<Login />).toJSON();
   expect(component).toMatchSnapshot();
+});
+
+test('Shows received message', () => {
+
+	const component = create(<Login message="Hello, AsyncStorage!"/>);
+
+	const errorText = component.root.findAllByProps({ testID : 'error' });
+
+	expect(errorText).not.toHaveLength(0);
+
 });
 
 describe('correctly accepts the credentials', () => {

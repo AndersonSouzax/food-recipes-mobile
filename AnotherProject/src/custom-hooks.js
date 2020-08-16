@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export function useAsyncStorage(){
+export const useAsyncStorage = () => {
 
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
 
-		async function seach(){
+		const seach = async () => {
 
 			try {
 
@@ -16,15 +16,17 @@ export function useAsyncStorage(){
 		    if(value !== null) {
 		    	const token = JSON.parse(value);
 		      setUser(token);
+		    }else{
+		    	setUser('error');
 		    }
 		  } catch(e) {
-		    setUser(null);
+		    setUser('error');
 		  }
 		}
 
 		seach();
 
-	});
+	}, []);
 
 	return user;
 

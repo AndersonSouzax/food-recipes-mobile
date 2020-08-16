@@ -14,27 +14,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { CommonActions } from '@react-navigation/native';
 
 import API from './services/api';
-import { useAsyncStorage } from './custom-hooks';
 
-export default function Login({ navigation }){
-
-	const user = useAsyncStorage();
-	
-	if(user){ 
-		
-		const resetAction = CommonActions.reset({
-      index: 0,
-      routes: [
-        { name: 'Main' },
-      ],
-    });
-
-		navigation.dispatch(resetAction);
-	}
+export default function Login({ message, navigation }){
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
+	const [error, setError] = useState(message ? message : '');
 
 	const handleSignInPress = async () => {
 

@@ -3,27 +3,16 @@ import React from 'react';
 
 import { useAsyncStorage } from '../../src/custom-hooks';
 
-import { create, act } from 'react-test-renderer';
+//import { create, act } from 'react-test-renderer';
 
-test('Returns stored user', () => {
+import { renderHook, act } from '@testing-library/react-hooks'
 
-	function SubComponent() {
-  	return (
-    	<p className="sub">Sub</p>
-  	);
-	}
+test('Returns stored user', async () => {
 
-	function MockComponent () {
+	const { result, waitForNextUpdate } = renderHook(() => useAsyncStorage());
 
-		const user = useAsyncStorage();
+	await waitForNextUpdate();
 
-		return (<div> user && <p> Hello </p> </div>);
-	};
-
-	let component;
-
-	act(() => { component = create(<MockComponent />); });
-
-	expect(component.root.findAllByType("p")).toBeNull();
-
+	expect(result.current.user).not.toBeNull();
+	
 });
