@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -44,7 +44,7 @@ export default function Routes () {
 
 	if(user.loading){
 		return ( 
-			<View style={{ alignItems: 'center', justifyContent: 'center' }}>
+			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				<Text>Loading...</Text>
 			</View>
 		);
@@ -53,12 +53,12 @@ export default function Routes () {
 	return ( 
 		<NavigationContainer>
 		  <Stack.Navigator>
-		  	user.stored === null ? ( 
+		    { user.stored === null ? ( 
 					<Stack.Screen name="Login" component={Login} 
 						message={ user.error ? user.error : null }/>
-	 			) : (
-	 				<Stack.Screen name="Main" component={Main}/>
-	 			)
+	 				) : (
+	 					<Stack.Screen name="Main" component={Main}/>
+	 				) } 
 		  </Stack.Navigator>
 		</NavigationContainer>
 	);

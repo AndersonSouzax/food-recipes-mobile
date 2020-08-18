@@ -4,7 +4,8 @@ import {
 	StyleSheet, 
 	TextInput, 
 	ScrollView, 
-	View, 
+	View,
+	Image, 
 	Text, 
 	StatusBar,
 	Pressable 
@@ -70,6 +71,10 @@ export default function Login({ message, navigation }){
 
 		<View style={styles.container}>
 
+			<StatusBar hidden />
+
+			<Image source={require('./images/tomato.png')} resizeMode="contain" />
+
 			<TextInput onKeyPress={handleKeyPress} onChangeText={handleUsername} 
 				value={username} />
 			
@@ -79,9 +84,9 @@ export default function Login({ message, navigation }){
 			{ error.length !== 0 && <Text testID="error"> { error } </Text> }
 
 			<Pressable onPress={handleSignInPress} disabled={!username && !password} 
-				testID="loginButton">
+				testID="loginButton" style={styles.button}>
 				
-				<Text style={styles.button}>Login</Text>
+				<Text style={styles.buttonTxt}>Login</Text>
 
 			</Pressable>
 
@@ -98,12 +103,36 @@ const styles = StyleSheet.create({
 		flex: 1,
 	  alignItems: 'center',
 	  justifyContent: 'center',
-	  backgroundColor: 'white',
+	  backgroundColor: '#FFFFFF',
 	},
-	button: {
-		fontSize: 16
+	button : {
+		padding: '20px',
+	  borderRadius: 5,
+	  alignSelf: 'stretch',
+	  margin: '15px',
+	  marginHorizontal: '20px',
+		backgroundColor: '#EA1D2C',
+	},
+	buttonTxt :{
+		color: '#FFF',
+	  fontWeight: 'bold',
+	  fontSize: 16,
+	  textAlign: 'center',
+	},
+	logo : {
+		height: '30%',
+  	marginBottom: '40px'
+	}, 
+	input : {
+		paddingHorizontal: '20px',
+	  paddingVertical: '15px',
+	  borderRadius: 5,
+	  backgroundColor: '#FFFFFF',
+	  alignSelf: 'stretch',
+	  marginBottom: '15px',
+	  marginHorizontal: '20px',
+	  fontSize: 16,
 	}
-
 });
 
 
