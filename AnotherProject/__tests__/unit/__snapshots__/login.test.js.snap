@@ -5,12 +5,26 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "white",
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "justifyContent": "center",
     }
   }
 >
+  <Image
+    resizeMode="contain"
+    source={
+      Object {
+        "process": [Function],
+      }
+    }
+    style={
+      Object {
+        "height": "30%",
+        "marginBottom": "40px",
+      }
+    }
+  />
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
@@ -46,12 +60,25 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#EA1D2C",
+        "borderRadius": 5,
+        "margin": "15px",
+        "marginHorizontal": "20px",
+        "padding": "20px",
+      }
+    }
     testID="loginButton"
   >
     <Text
       style={
         Object {
+          "color": "#FFF",
           "fontSize": 16,
+          "fontWeight": "bold",
+          "textAlign": "center",
         }
       }
     >
@@ -66,12 +93,26 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "white",
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "justifyContent": "center",
     }
   }
 >
+  <Image
+    resizeMode="contain"
+    source={
+      Object {
+        "process": [Function],
+      }
+    }
+    style={
+      Object {
+        "height": "30%",
+        "marginBottom": "40px",
+      }
+    }
+  />
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
@@ -100,12 +141,25 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#EA1D2C",
+        "borderRadius": 5,
+        "margin": "15px",
+        "marginHorizontal": "20px",
+        "padding": "20px",
+      }
+    }
     testID="loginButton"
   >
     <Text
       style={
         Object {
+          "color": "#FFF",
           "fontSize": 16,
+          "fontWeight": "bold",
+          "textAlign": "center",
         }
       }
     >
@@ -120,12 +174,26 @@ exports[`renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "white",
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "justifyContent": "center",
     }
   }
 >
+  <Image
+    resizeMode="contain"
+    source={
+      Object {
+        "process": [Function],
+      }
+    }
+    style={
+      Object {
+        "height": "30%",
+        "marginBottom": "40px",
+      }
+    }
+  />
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
@@ -154,12 +222,25 @@ exports[`renders correctly 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#EA1D2C",
+        "borderRadius": 5,
+        "margin": "15px",
+        "marginHorizontal": "20px",
+        "padding": "20px",
+      }
+    }
     testID="loginButton"
   >
     <Text
       style={
         Object {
+          "color": "#FFF",
           "fontSize": 16,
+          "fontWeight": "bold",
+          "textAlign": "center",
         }
       }
     >
@@ -174,12 +255,26 @@ exports[`tries to log in the user too short password was inserted 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "white",
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "justifyContent": "center",
     }
   }
 >
+  <Image
+    resizeMode="contain"
+    source={
+      Object {
+        "process": [Function],
+      }
+    }
+    style={
+      Object {
+        "height": "30%",
+        "marginBottom": "40px",
+      }
+    }
+  />
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
@@ -215,12 +310,25 @@ exports[`tries to log in the user too short password was inserted 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#EA1D2C",
+        "borderRadius": 5,
+        "margin": "15px",
+        "marginHorizontal": "20px",
+        "padding": "20px",
+      }
+    }
     testID="loginButton"
   >
     <Text
       style={
         Object {
+          "color": "#FFF",
           "fontSize": 16,
+          "fontWeight": "bold",
+          "textAlign": "center",
         }
       }
     >

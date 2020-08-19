@@ -73,13 +73,16 @@ export default function Login({ message, navigation }){
 
 			<StatusBar hidden />
 
-			<Image source={require('./images/tomato.png')} resizeMode="contain" />
+			<Image style={styles.logo} source={require('./images/tomato.png')} 
+				resizeMode="contain" />
+
+			<Text style={styles.title}> Food Recipes </Text>
 
 			<TextInput onKeyPress={handleKeyPress} onChangeText={handleUsername} 
-				value={username} />
+				value={username} style={styles.input} placeholder="email" />
 			
 			<TextInput onKeyPress={handleKeyPress} onChangeText={handlePassword} 
-				value={password} />
+				value={password} style={styles.input} placeholder="password"/>
 
 			{ error.length !== 0 && <Text testID="error"> { error } </Text> }
 
@@ -106,11 +109,11 @@ const styles = StyleSheet.create({
 	  backgroundColor: '#FFFFFF',
 	},
 	button : {
-		padding: '20px',
+		padding: 20,
 	  borderRadius: 5,
 	  alignSelf: 'stretch',
-	  margin: '15px',
-	  marginHorizontal: '20px',
+	  margin: 15,
+	  marginHorizontal: 20,
 		backgroundColor: '#EA1D2C',
 	},
 	buttonTxt :{
@@ -121,17 +124,26 @@ const styles = StyleSheet.create({
 	},
 	logo : {
 		height: '30%',
-  	marginBottom: '40px'
-	}, 
+  	marginBottom: 20,
+	},
+	title : {
+		fontFamily: 'cursive',
+		fontWeight: 'bold',
+		fontSize: 32,
+		marginBottom: 25,
+		color: '#404040'
+	},
 	input : {
-		paddingHorizontal: '20px',
-	  paddingVertical: '15px',
+		paddingHorizontal: 20,
+	  paddingVertical: 15,
 	  borderRadius: 5,
 	  backgroundColor: '#FFFFFF',
 	  alignSelf: 'stretch',
-	  marginBottom: '15px',
-	  marginHorizontal: '20px',
+	  marginBottom: 15,
+	  marginHorizontal: 20,
 	  fontSize: 16,
+	  borderColor: '#EA1D2C',
+	  borderWidth: 1,
 	}
 });
 

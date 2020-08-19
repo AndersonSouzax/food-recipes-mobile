@@ -52,7 +52,7 @@ export default function Routes () {
 
 	return ( 
 		<NavigationContainer>
-		  <Stack.Navigator>
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 		    { user.stored === null ? ( 
 					<Stack.Screen name="Login" component={Login} 
 						message={ user.error ? user.error : null }/>
