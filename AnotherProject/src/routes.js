@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Login from './login';
-// import SignUp from './pages/signUp';
+import SignUp from './signup';
+
 // import Main from './pages/main';
 
 function Main(){
@@ -53,9 +54,12 @@ export default function Routes () {
 	return ( 
 		<NavigationContainer>
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-		    { user.stored === null ? ( 
-					<Stack.Screen name="Login" component={Login} 
-						message={ user.error ? user.error : null }/>
+		    { user.stored === null ? (
+		    	<> 
+						<Stack.Screen name="Login" component={Login} 
+							message={ user.error ? user.error : null }/>
+						<Stack.Screen name="SignUp" component={SignUp} />
+					</>
 	 				) : (
 	 					<Stack.Screen name="Main" component={Main}/>
 	 				) } 

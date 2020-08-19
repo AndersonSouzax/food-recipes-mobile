@@ -170,6 +170,24 @@ describe('tries to log in the user', () => {
 
 });
 
+test('Redirect to the sign up screen', () => {
+
+	expect.assertions(1);
+
+	let component;
+
+	const navigationMock = { navigate: jest.fn() };
+
+	act(() => { component = create(<Login navigation={navigationMock}/>); });
+
+	const signup = component.root.findByProps({ testID : 'signupButton' });
+
+	signup.props.onPress();
+
+	expect(navigationMock.navigate.mock.calls.length).toBe(1);
+
+});
+
 
 
 

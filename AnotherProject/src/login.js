@@ -16,6 +16,16 @@ import { CommonActions } from '@react-navigation/native';
 
 import API from './services/api';
 
+import { 
+	title, 
+	container, 
+	button, 
+	buttonTxt, 
+	linkButton, 
+	linkButtonTxt, 
+	input
+} from './styles';
+
 export default function Login({ message, navigation }){
 
 	const [username, setUsername] = useState('');
@@ -50,6 +60,8 @@ export default function Login({ message, navigation }){
 			}	
 		}
 	};
+
+	const handleSignUpPress = () => { navigation.navigate('SignUp'); };
 
 	const handleUsername = (username) => {
 		setUsername(username);
@@ -93,6 +105,13 @@ export default function Login({ message, navigation }){
 
 			</Pressable>
 
+			<Pressable onPress={handleSignUpPress} testID="signupButton" 
+				style={styles.linkButton}>
+				
+				<Text style={styles.linkButtonTxt}>Sign Up</Text>
+
+			</Pressable>
+
 		</View>
 
 	);
@@ -101,50 +120,17 @@ export default function Login({ message, navigation }){
 // Style
 
 const styles = StyleSheet.create({
-
-	container : {
-		flex: 1,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  backgroundColor: '#FFFFFF',
-	},
-	button : {
-		padding: 20,
-	  borderRadius: 5,
-	  alignSelf: 'stretch',
-	  margin: 15,
-	  marginHorizontal: 20,
-		backgroundColor: '#EA1D2C',
-	},
-	buttonTxt :{
-		color: '#FFF',
-	  fontWeight: 'bold',
-	  fontSize: 16,
-	  textAlign: 'center',
-	},
+	container: container,
+	button: button,
+	linkButton: linkButton,
+	linkButtonTxt: linkButtonTxt,
+	buttonTxt: buttonTxt,
 	logo : {
 		height: '30%',
   	marginBottom: 20,
 	},
-	title : {
-		fontFamily: 'cursive',
-		fontWeight: 'bold',
-		fontSize: 32,
-		marginBottom: 25,
-		color: '#404040'
-	},
-	input : {
-		paddingHorizontal: 20,
-	  paddingVertical: 15,
-	  borderRadius: 5,
-	  backgroundColor: '#FFFFFF',
-	  alignSelf: 'stretch',
-	  marginBottom: 15,
-	  marginHorizontal: 20,
-	  fontSize: 16,
-	  borderColor: '#EA1D2C',
-	  borderWidth: 1,
-	}
+	title: title,
+	input: input
 });
 
 

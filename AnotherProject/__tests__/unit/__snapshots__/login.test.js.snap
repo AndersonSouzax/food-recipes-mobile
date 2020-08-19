@@ -21,15 +21,43 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
     style={
       Object {
         "height": "30%",
-        "marginBottom": "40px",
+        "marginBottom": 20,
       }
     }
   />
+  <Text
+    style={
+      Object {
+        "color": "#404040",
+        "fontFamily": "cursive",
+        "fontSize": 32,
+        "fontWeight": "bold",
+        "marginBottom": 25,
+      }
+    }
+  >
+     Food Recipes 
+  </Text>
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="email"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value="a"
   />
@@ -37,7 +65,22 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="password"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value="d"
   />
@@ -65,9 +108,9 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
         "alignSelf": "stretch",
         "backgroundColor": "#EA1D2C",
         "borderRadius": 5,
-        "margin": "15px",
-        "marginHorizontal": "20px",
-        "padding": "20px",
+        "margin": 15,
+        "marginHorizontal": 10,
+        "padding": 20,
       }
     }
     testID="loginButton"
@@ -83,6 +126,41 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
       }
     >
       Login
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "marginHorizontal": 20,
+        "marginTop": 7,
+        "padding": 5,
+      }
+    }
+    testID="signupButton"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#EA1D2C",
+          "fontSize": 16,
+          "textAlign": "center",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Sign Up
     </Text>
   </View>
 </View>
@@ -109,15 +187,43 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
     style={
       Object {
         "height": "30%",
-        "marginBottom": "40px",
+        "marginBottom": 20,
       }
     }
   />
+  <Text
+    style={
+      Object {
+        "color": "#404040",
+        "fontFamily": "cursive",
+        "fontSize": 32,
+        "fontWeight": "bold",
+        "marginBottom": 25,
+      }
+    }
+  >
+     Food Recipes 
+  </Text>
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="email"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value="a"
   />
@@ -125,7 +231,22 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="password"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value="d"
   />
@@ -146,9 +267,9 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
         "alignSelf": "stretch",
         "backgroundColor": "#EA1D2C",
         "borderRadius": 5,
-        "margin": "15px",
-        "marginHorizontal": "20px",
-        "padding": "20px",
+        "margin": 15,
+        "marginHorizontal": 10,
+        "padding": 20,
       }
     }
     testID="loginButton"
@@ -164,6 +285,41 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
       }
     >
       Login
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "marginHorizontal": 20,
+        "marginTop": 7,
+        "padding": 5,
+      }
+    }
+    testID="signupButton"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#EA1D2C",
+          "fontSize": 16,
+          "textAlign": "center",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Sign Up
     </Text>
   </View>
 </View>
@@ -190,15 +346,43 @@ exports[`renders correctly 1`] = `
     style={
       Object {
         "height": "30%",
-        "marginBottom": "40px",
+        "marginBottom": 20,
       }
     }
   />
+  <Text
+    style={
+      Object {
+        "color": "#404040",
+        "fontFamily": "cursive",
+        "fontSize": 32,
+        "fontWeight": "bold",
+        "marginBottom": 25,
+      }
+    }
+  >
+     Food Recipes 
+  </Text>
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="email"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value=""
   />
@@ -206,7 +390,22 @@ exports[`renders correctly 1`] = `
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="password"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value=""
   />
@@ -227,9 +426,9 @@ exports[`renders correctly 1`] = `
         "alignSelf": "stretch",
         "backgroundColor": "#EA1D2C",
         "borderRadius": 5,
-        "margin": "15px",
-        "marginHorizontal": "20px",
-        "padding": "20px",
+        "margin": 15,
+        "marginHorizontal": 10,
+        "padding": 20,
       }
     }
     testID="loginButton"
@@ -245,6 +444,41 @@ exports[`renders correctly 1`] = `
       }
     >
       Login
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "marginHorizontal": 20,
+        "marginTop": 7,
+        "padding": 5,
+      }
+    }
+    testID="signupButton"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#EA1D2C",
+          "fontSize": 16,
+          "textAlign": "center",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Sign Up
     </Text>
   </View>
 </View>
@@ -271,15 +505,43 @@ exports[`tries to log in the user too short password was inserted 1`] = `
     style={
       Object {
         "height": "30%",
-        "marginBottom": "40px",
+        "marginBottom": 20,
       }
     }
   />
+  <Text
+    style={
+      Object {
+        "color": "#404040",
+        "fontFamily": "cursive",
+        "fontSize": 32,
+        "fontWeight": "bold",
+        "marginBottom": 25,
+      }
+    }
+  >
+     Food Recipes 
+  </Text>
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="email"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value="a"
   />
@@ -287,7 +549,22 @@ exports[`tries to log in the user too short password was inserted 1`] = `
     allowFontScaling={true}
     onChangeText={[Function]}
     onKeyPress={[Function]}
+    placeholder="password"
     rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#EA1D2C",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "marginBottom": 15,
+        "marginHorizontal": 20,
+        "paddingHorizontal": 20,
+        "paddingVertical": 15,
+      }
+    }
     underlineColorAndroid="transparent"
     value="d"
   />
@@ -315,9 +592,9 @@ exports[`tries to log in the user too short password was inserted 1`] = `
         "alignSelf": "stretch",
         "backgroundColor": "#EA1D2C",
         "borderRadius": 5,
-        "margin": "15px",
-        "marginHorizontal": "20px",
-        "padding": "20px",
+        "margin": 15,
+        "marginHorizontal": 10,
+        "padding": 20,
       }
     }
     testID="loginButton"
@@ -333,6 +610,41 @@ exports[`tries to log in the user too short password was inserted 1`] = `
       }
     >
       Login
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "marginHorizontal": 20,
+        "marginTop": 7,
+        "padding": 5,
+      }
+    }
+    testID="signupButton"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#EA1D2C",
+          "fontSize": 16,
+          "textAlign": "center",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Sign Up
     </Text>
   </View>
 </View>
