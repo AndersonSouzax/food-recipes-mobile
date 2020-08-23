@@ -7,12 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import Login from './login';
 import SignUp from './signup';
-
-// import Main from './pages/main';
-
-function Main(){
-	return <> <p>Main</p> </>;
-}
+import Recipes from './recipes';
 
 const Stack = createStackNavigator();
 
@@ -61,7 +56,7 @@ export default function Routes () {
 						<Stack.Screen name="SignUp" component={SignUp} />
 					</>
 	 				) : (
-	 					<Stack.Screen name="Main" component={Main}/>
+	 					<Stack.Screen name="Recipes" component={Recipes}/>
 	 				) } 
 		  </Stack.Navigator>
 		</NavigationContainer>

@@ -1,26 +1,37 @@
 import 'react-native';
 import React from 'react';
+import { render, waitFor } from '@testing-library/react-native';
 
 import Recipes from '../../src/recipes';
 
 jest.mock('../../src/services/api');
 
-import { create, act } from 'react-test-renderer';
-
-import { renderHook, act } from '@testing-library/react-hooks'
-
 test('renders correctly', () => {
-  const component = create(<Recipes />).toJSON();
+  const component = render(<Recipes />).toJSON();
   expect(component).toMatchSnapshot();
 });
 
-test('Intially, fetches all the recipes', async () => {
+// Almost the same code for all and my recipes request
+describe('Fetching recipes', () => {
 
-	const { result, waitForNextUpdate } = renderHook(() => Recipes());
+	test('Fetches all recipes', async () => {
 
-	await waitForNextUpdate();
+		const { getByTestId } = render(<Recipes navigation={null} stored={null} />);
 
-	expect(result.current.recipes).not.toBeNull();
+		await waitFor(() => getByTestId('recipes-list'));
+
+	});
+
+// 	test('Notify error on data fetching', async () => { 
+// 
+// 		const { result, waitForNextUpdate } = renderHook(() => Recipes());
+// 
+// 		await waitForNextUpdate();
+// 
+// 		expect(result.current.loading.error).not.toHaveLength(0);
+// 
+// 	});
 	
+
 });
 

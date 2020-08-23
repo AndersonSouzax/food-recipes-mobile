@@ -8,13 +8,15 @@ import { create, act } from 'react-test-renderer';
 jest.mock('../../src/services/api');
 
 test('renders correctly', () => {
-  const component = create(<Login />).toJSON();
+  const component = create(<Login route={{ params : {} }} />).toJSON();
   expect(component).toMatchSnapshot();
 });
 
 test('Shows received message', () => {
 
-	const component = create(<Login message="Hello, AsyncStorage!"/>);
+	const component = create(
+		<Login route={{ params: { message : "Hello, AsyncStorage!" } }}/>
+	);
 
 	const errorText = component.root.findAllByProps({ testID : 'error' });
 
@@ -26,7 +28,7 @@ describe('correctly accepts the credentials', () => {
 
 	let component;
 
-	act(() => { component = create(<Login />); });
+	act(() => { component = create(<Login route={{ params : {} }} />); });
 
 	const texts = component.root.findAllByType("TextInput");
 	const email = texts[0];
@@ -75,7 +77,7 @@ test('enables the login button only if password and user email are not null', ()
 
 	let component;
 
-	act(() => { component = create(<Login />); });
+	act(() => { component = create(<Login route={{ params : {} }} />); });
 
 	const inputs = component.root.findAllByType("TextInput");
 	const loginButton = component.root.findByProps({ testID : 'loginButton' });
@@ -100,7 +102,11 @@ describe('tries to log in the user', () => {
 
 	const navigationMock = { dispatch: jest.fn() };
 
-	act(() => { component = create(<Login navigation={navigationMock}/>); });
+	act(() => { 
+		component = create(
+			<Login navigation={navigationMock} route={{ params : {} }}/>
+		); 
+	});
 
 	const inputs = component.root.findAllByType("TextInput");
 	const loginButton = component.root.findByProps({ testID : 'loginButton' });
@@ -149,7 +155,9 @@ describe('tries to log in the user', () => {
 		expect.assertions(1);
 
 		act(() => { 
-			component = create(<Login navigation={navigationMock}/>); 
+			component = create(
+				<Login navigation={navigationMock} route={{ params:{} }}/>
+			); 
 		});
 
 		const inputs = component.root.findAllByType("TextInput");
@@ -178,7 +186,10 @@ test('Redirect to the sign up screen', () => {
 
 	const navigationMock = { navigate: jest.fn() };
 
-	act(() => { component = create(<Login navigation={navigationMock}/>); });
+	act(() => { component = create(
+			<Login navigation={navigationMock} route={{ params : {} }} />
+		); 
+	});
 
 	const signup = component.root.findByProps({ testID : 'signupButton' });
 

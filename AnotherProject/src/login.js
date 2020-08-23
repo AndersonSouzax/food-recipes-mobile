@@ -26,7 +26,9 @@ import {
 	input
 } from './styles';
 
-export default function Login({ message, navigation }){
+export default function Login({ route, navigation }){
+
+	const { message } = route.params;
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -44,7 +46,7 @@ export default function Login({ message, navigation }){
 
 				const response = await API.login({ username, password });
 
-				await AsyncStorage.setItem('FoodRecipeToken', response.data.token);
+				await AsyncStorage.setItem('FoodRecipeToken', response.data);
 
 		    const resetAction = CommonActions.reset({
 		      index: 0,

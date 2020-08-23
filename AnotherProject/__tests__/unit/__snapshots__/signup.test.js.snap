@@ -11,124 +11,172 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Text
-    style={
-      Object {
-        "color": "#404040",
-        "fontFamily": "cursive",
-        "fontSize": 32,
-        "fontWeight": "bold",
-        "marginBottom": 25,
-      }
-    }
-  >
-     Food Recipes 
-  </Text>
-  <TextInput
-    allowFontScaling={true}
-    onChangeText={[Function]}
-    onKeyPress={[Function]}
-    placeholder="email"
-    rejectResponderTermination={true}
-    style={
-      Object {
-        "alignSelf": "stretch",
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#EA1D2C",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "fontSize": 16,
-        "marginBottom": 15,
-        "marginHorizontal": 20,
-        "paddingHorizontal": 20,
-        "paddingVertical": 15,
-      }
-    }
-    underlineColorAndroid="transparent"
-    value=""
-  />
-  <TextInput
-    allowFontScaling={true}
-    onChangeText={[Function]}
-    onKeyPress={[Function]}
-    placeholder="password"
-    rejectResponderTermination={true}
-    style={
-      Object {
-        "alignSelf": "stretch",
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#EA1D2C",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "fontSize": 16,
-        "marginBottom": 15,
-        "marginHorizontal": 20,
-        "paddingHorizontal": 20,
-        "paddingVertical": 15,
-      }
-    }
-    underlineColorAndroid="transparent"
-    value=""
-  />
-  <TextInput
-    allowFontScaling={true}
-    onChangeText={[Function]}
-    onKeyPress={[Function]}
-    placeholder="repeat password"
-    rejectResponderTermination={true}
-    style={
-      Object {
-        "alignSelf": "stretch",
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#EA1D2C",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "fontSize": 16,
-        "marginBottom": 15,
-        "marginHorizontal": 20,
-        "paddingHorizontal": 20,
-        "paddingVertical": 15,
-      }
-    }
-    underlineColorAndroid="transparent"
-    value=""
-  />
   <View
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    accessibilityIgnoresInvertColors={true}
     style={
       Object {
-        "alignSelf": "stretch",
-        "backgroundColor": "#EA1D2C",
-        "borderRadius": 5,
-        "margin": 15,
-        "marginHorizontal": 10,
-        "padding": 20,
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+        "resizeMode": "cover",
       }
     }
-    testID="signUpButton"
   >
+    <Image
+      source={
+        Object {
+          "process": [Function],
+        }
+      }
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "height": undefined,
+            "width": undefined,
+          },
+          undefined,
+        ]
+      }
+    />
     <Text
       style={
         Object {
-          "color": "#FFF",
-          "fontSize": 16,
+          "color": "#404040",
+          "fontFamily": "cursive",
+          "fontSize": 32,
           "fontWeight": "bold",
+          "marginBottom": 25,
+        }
+      }
+    >
+       Food Recipes 
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "blue",
+          "fontFamily": "cursive",
+          "fontSize": 22,
+          "marginBottom": 25,
           "textAlign": "center",
         }
       }
     >
-      Sign Up
+      Sign up and start discovering a world of delicious foods to cook and eat with family
     </Text>
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      onKeyPress={[Function]}
+      placeholder="email"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#EA1D2C",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "fontSize": 16,
+          "marginBottom": 15,
+          "marginHorizontal": 20,
+          "paddingHorizontal": 20,
+          "paddingVertical": 15,
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      onKeyPress={[Function]}
+      placeholder="password"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#EA1D2C",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "fontSize": 16,
+          "marginBottom": 15,
+          "marginHorizontal": 20,
+          "paddingHorizontal": 20,
+          "paddingVertical": 15,
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      onKeyPress={[Function]}
+      placeholder="repeat password"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#EA1D2C",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "fontSize": 16,
+          "marginBottom": 15,
+          "marginHorizontal": 20,
+          "paddingHorizontal": 20,
+          "paddingVertical": 15,
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#EA1D2C",
+          "borderRadius": 5,
+          "margin": 15,
+          "marginHorizontal": 10,
+          "padding": 20,
+        }
+      }
+      testID="signUpButton"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFF",
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "textAlign": "center",
+          }
+        }
+      >
+        Sign Up
+      </Text>
+    </View>
   </View>
 </View>
 `;
