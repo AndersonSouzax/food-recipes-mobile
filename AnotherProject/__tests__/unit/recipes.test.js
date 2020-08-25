@@ -1,10 +1,12 @@
 import 'react-native';
 import React from 'react';
-import { render, waitFor } from '@testing-library/react-native';
+import { render, waitFor, act } from '@testing-library/react-native';
 
 import Recipes from '../../src/recipes';
 
 jest.mock('../../src/services/api');
+
+jest.setTimeout(20000);
 
 test('renders correctly', () => {
   const component = render(<Recipes />).toJSON();
@@ -14,11 +16,11 @@ test('renders correctly', () => {
 // Almost the same code for all and my recipes request
 describe('Fetching recipes', () => {
 
-	test('Fetches all recipes', async () => {
+	test('Display all the recipes after loading', async () => {
 
-		const { getByTestId } = render(<Recipes navigation={null} stored={null} />);
+		const { getByTestId } = render(<Recipes navigation={null} />);
 
-		await waitFor(() => getByTestId('recipes-list'));
+		await waitFor(() => getByTestId('recipes-list'), { timeout: 19000 });
 
 	});
 

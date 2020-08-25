@@ -24,7 +24,7 @@ class API {
 
   request(url, method, token, informations) {
     return new Promise((resolve, reject) => {
-      process.nextTick(() => resolve([{id: 2, title : 'Loving...' }]));
+      process.nextTick(() => resolve( { data: [{id: 2, title : 'Loving...' }] } ) );
     });
   }
 

@@ -51,12 +51,12 @@ export default function Routes () {
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 		    { user.stored === null ? (
 		    	<> 
-						<Stack.Screen name="Login" component={Login} 
-							message={ user.error ? user.error : null }/>
+						<Stack.Screen name="Login" component={Login}
+							initialParams={{ message: user.error ? user.error : null }}/>
 						<Stack.Screen name="SignUp" component={SignUp} />
 					</>
 	 				) : (
-	 					<Stack.Screen name="Recipes" component={Recipes}/>
+	 					<Stack.Screen name="Recipes" component={Recipes} />
 	 				) } 
 		  </Stack.Navigator>
 		</NavigationContainer>

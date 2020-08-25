@@ -20,41 +20,69 @@ import {
 
 import API from './services/api';
 
-export default function Recipes({ navigation, userData }){
+export default function Recipes({ navigation }){
 
 	const [recipes, setRecipes] = useState(null);
 	const [loading, setLoading] = useState({ loading: false, error: '', obj : '' });
 	const [reload, setReload] = useState({ type : 'ALL' });
-	const [stored, setStored] = useState(userData);
+	const [stored, setStored] = useState(null);
+
+	useEffect(() => {
+
+		const getStorage = async () => {
+
+			try {
+
+	    	const value = await AsyncStorage.getItem('FoodRecipeToken');
+
+		    if(value !== null) {
+		    	const token = JSON.parse(value);
+		      setStored(token);
+		    }else{
+		    	setLoading({ loading : false, obj : '', 
+		    		error: 'Missing user token, reload the page!' });
+		    }
+		  } catch(e) {
+		    setLoading({ loading : false, obj : '', 
+		    	error: `Exception getting the token: ${e.message}. Reload the page` });
+		  }
+		};
+
+		getStorage();
+
+	}, []);
 
 	// Function related to the same hook: recipes
 	useEffect(() => {
 
 		const fetchAll = async () => { 
 
-			if(loading.loading){ return; }
+			if(loading.loading || stored === null){ return; }
 
 			try{
 
-// 				setLoading({ error : '', loading : true, 
-// 					'obj' : reload.type === 'ALL' ? 'All Recipes' : 'Only Your Recipes'});
-// 
-// 				let path = reload.type === 'ALL' 
-// 					? '/recipe' 
-// 					: `/recipe?user=${stored.id}`;
-// 
-// 				const response = await API.request({  });
+				setLoading({ error : '', loading : true, 
+					'obj' : reload.type === 'ALL' ? 'All Recipes' : 'Only Your Recipes'});
 
-				setRecipes([{ id: 1, title : 'Love'}]);
+				let path = reload.type === 'ALL' 
+					? '/recipe' 
+					: `/recipe?user=${stored.id}`;
+
+				const response = await API.request(path, 'get', stored.token, null);
+
+				setLoading({ loading : false, obj : '', error: '' });
+
+				setRecipes(response.data);
 
 			}catch(e){
-
+				setLoading({ loading : false, obj : '', 
+					error: `An error has occurred while getting recipes: ${e.message}` });
 			}
 		}
 
 		fetchAll();
 
-	}, [reload]);
+	}, [reload, stored]);
 
 	const recipeRender = ({ item }) => (
   	<View>
