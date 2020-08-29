@@ -17,15 +17,18 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'cd AnotherProject'
-        sh 'yarn install'
+        dir('AnotherProject'){
+          sh 'yarn install'
+        }
       }
     }  
     
             
     stage('Test') {
       steps {
-        sh 'yarn test'
+        dir('AnotherProject'){
+          sh 'yarn test'
+        }
       }
     }
   }
