@@ -9,6 +9,7 @@ pipeline {
      
     stage('Build') {
       steps {
+        sh 'cd AnotherProject'
         sh 'yarn install'
       }
     }  
