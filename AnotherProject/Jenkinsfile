@@ -1,0 +1,23 @@
+
+pipeline {
+
+  agent any
+    
+  tools {nodejs "Node-12.18.3"}
+    
+  stages {
+     
+    stage('Build') {
+      steps {
+        sh 'yarn install'
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'yarn test'
+      }
+    }
+  }
+}
