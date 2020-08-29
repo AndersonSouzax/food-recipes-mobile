@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { render, waitFor, act } from '@testing-library/react-native';
+import { render, waitFor, act, fireEvent } from '@testing-library/react-native';
 
 import Recipes from '../../src/recipes';
 
@@ -22,6 +22,24 @@ describe('Fetching recipes', () => {
 
 		await waitFor(() => getByTestId('recipes-list'), { timeout: 19000 });
 
+	});
+
+	test('Load only user\'s created recipes', async () => {
+
+		const { getByTestId } = render(<Recipes navigation={null} />);
+
+		await waitFor(() => getByTestId('recipes-list'));
+
+		await act(async() => { 
+			await fireEvent.press(getByTestId('my-recipes')); 
+		});
+
+		await waitForElementToBeRemoved(() => getByTestId('loadiv'));
+
+		const after = component.toJSON();
+
+		expect(after).toMatchSnapshot();
+		
 	});
 
 // 	test('Notify error on data fetching', async () => { 

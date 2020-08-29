@@ -18,6 +18,8 @@ import {
 	buttonTxt,
 } from './styles';
 
+import { Appbar } from 'react-native-paper';
+
 import API from './services/api';
 
 export default function Recipes({ navigation }){
@@ -105,9 +107,22 @@ export default function Recipes({ navigation }){
 				)
 			}
 
-			{ loading.loading && <Text> Loading {loading.obj}...</Text> }
+			{ loading.loading && <Text testID="loadiv"> Loading {loading.obj}...</Text> }
 			{ loading.error && <Text testID="error"> { loading.error } </Text> }
 		</View>
+
+		<Appbar style={styles.bottom}>
+	    <Appbar.Action testID="my-recipes" icon="mail" onPress={() => console.log('Pressed mail')} />
+	  </Appbar>
 	);
 };
+
+const styles = StyleSheet.create({
+  bottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});
 

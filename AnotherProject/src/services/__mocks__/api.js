@@ -8,6 +8,11 @@ class API {
       'anderson': { data : { token: '9340349njfnidfbuierf', name : 'And', id : 1 } }
     };
 
+    this.recipes = [
+      { id: 1, title : 'Fish', user : { id: 1 }, category : { id: 1 } },
+      { id: 67, title : 'Sushi', user : { id: 2 }, category : { id: 54 } },
+      { id: 45, title : 'Temaki', user : { id: 1 }, category : { id: 54 } },
+    ];
   }
 
   login(credentials) {
@@ -24,7 +29,19 @@ class API {
 
   request(url, method, token, informations) {
     return new Promise((resolve, reject) => {
-      process.nextTick(() => resolve( { data: [{id: 2, title : 'Loving...' }] } ) );
+      process.nextTick(() => {
+
+          if(url.includes('recipe?user')){
+
+            // As we're working in a controlled enviroment, no need for checks...
+            const userId = parseInt(url.substring(url.indexOf('=') + 1));
+    
+            resolve(this.recipes.filter( x => x.user.id === userId));
+
+          }else{
+            resolve( { data: this.recipes } )   
+          }
+        });
     });
   }
 
