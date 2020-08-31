@@ -26,20 +26,26 @@ describe('Fetching recipes', () => {
 
 	test('Load only user\'s created recipes', async () => {
 
-		const { getByTestId } = render(<Recipes navigation={null} />);
+		//await act(async () => {
 
-		await waitFor(() => getByTestId('recipes-list'));
+			const component = render(<Recipes navigation={null} />);
+			
+			const { getByTestId } = component;
 
-		await act(async() => { 
-			await fireEvent.press(getByTestId('my-recipes')); 
-		});
+			await waitFor(() => getByTestId('recipes-list'));
 
-		await waitForElementToBeRemoved(() => getByTestId('loadiv'));
+			fireEvent.press(getByTestId('my-recipes'));
 
-		const after = component.toJSON();
+			await waitFor(() => getByTestId('loadiv'), { timeout: 19000 });
 
-		expect(after).toMatchSnapshot();
-		
+			await waitForElementToBeRemoved(() => getByTestId('loadiv'));
+
+			const after = component.toJSON();
+
+			expect(after).toMatchSnapshot();
+
+		//});
+
 	});
 
 // 	test('Notify error on data fetching', async () => { 

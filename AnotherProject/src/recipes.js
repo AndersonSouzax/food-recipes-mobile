@@ -38,15 +38,23 @@ export default function Recipes({ navigation }){
 	    	const value = await AsyncStorage.getItem('FoodRecipeToken');
 
 		    if(value !== null) {
+
 		    	const token = JSON.parse(value);
+
 		      setStored(token);
+
 		    }else{
+
 		    	setLoading({ loading : false, obj : '', 
 		    		error: 'Missing user token, reload the page!' });
+
 		    }
+
 		  } catch(e) {
+
 		    setLoading({ loading : false, obj : '', 
 		    	error: `Exception getting the token: ${e.message}. Reload the page` });
+
 		  }
 		};
 
@@ -56,6 +64,8 @@ export default function Recipes({ navigation }){
 
 	// Function related to the same hook: recipes
 	useEffect(() => {
+
+		let mounted = true;
 
 		const fetchAll = async () => { 
 
@@ -72,19 +82,30 @@ export default function Recipes({ navigation }){
 
 				const response = await API.request(path, 'get', stored.token, null);
 
-				setLoading({ loading : false, obj : '', error: '' });
+				if(mounted){
 
-				setRecipes(response.data);
+					setLoading({ loading : false, obj : '', error: '' });
+
+					setRecipes(response.data);
+
+				}
 
 			}catch(e){
+
 				setLoading({ loading : false, obj : '', 
 					error: `An error has occurred while getting recipes: ${e.message}` });
+
 			}
 		}
 
 		fetchAll();
 
+		//Avoid make changes on unmounted component...
+		return () => mounted = false;
+
 	}, [reload, stored]);
+
+	const handleMy = () => { setReload({ type : 'MY_RECIPES' }); }
 
 	const recipeRender = ({ item }) => (
   	<View>
@@ -93,27 +114,29 @@ export default function Recipes({ navigation }){
 	);
 
 	return (
-		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+		<>
+			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-			<Text>Lots and lots of recipes...</Text>
+				<Text>Lots and lots of recipes...</Text>
 
-			{ 
-				recipes && ( 
-					recipes.length > 0 ?
-						<FlatList testID="recipes-list" data={recipes} 
-							renderItem={recipeRender} keyExtractor={(item, index) => 'recipe-${item.id}'} /> 
-					: 
-						<Text> No recipes received for the token...</Text>
-				)
-			}
+				{ 
+					recipes && ( 
+						recipes.length > 0 ?
+							<FlatList testID="recipes-list" data={recipes} 
+								renderItem={recipeRender} keyExtractor={ () => '_' + Math.random().toString(36).substr(2, 9) } /> 
+						: 
+							<Text> No recipes received for the token...</Text>
+					)
+				}
 
-			{ loading.loading && <Text testID="loadiv"> Loading {loading.obj}...</Text> }
-			{ loading.error && <Text testID="error"> { loading.error } </Text> }
-		</View>
+				{ loading.loading && <Text testID="loadiv"> Loading {loading.obj}...</Text> }
+				{ loading.error && <Text testID="error"> { loading.error } </Text> }
+			</View>
 
-		<Appbar style={styles.bottom}>
-	    <Appbar.Action testID="my-recipes" icon="mail" onPress={() => console.log('Pressed mail')} />
-	  </Appbar>
+			<Appbar style={styles.bottom}>
+		    <Appbar.Action testID="my-recipes" icon="mail" onPress={handleMy} />
+		  </Appbar>
+	  </>
 	);
 };
 

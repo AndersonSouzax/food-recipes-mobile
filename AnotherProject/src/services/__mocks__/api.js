@@ -11,7 +11,6 @@ class API {
     this.recipes = [
       { id: 1, title : 'Fish', user : { id: 1 }, category : { id: 1 } },
       { id: 67, title : 'Sushi', user : { id: 2 }, category : { id: 54 } },
-      { id: 45, title : 'Temaki', user : { id: 1 }, category : { id: 54 } },
     ];
   }
 
@@ -33,7 +32,7 @@ class API {
 
           if(url.includes('recipe?user')){
 
-            // As we're working in a controlled enviroment, no need for checks...
+            // As we're working in a controlled enviroment,there's no need for checks...
             const userId = parseInt(url.substring(url.indexOf('=') + 1));
     
             resolve(this.recipes.filter( x => x.user.id === userId));
