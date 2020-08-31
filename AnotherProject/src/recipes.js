@@ -107,6 +107,8 @@ export default function Recipes({ navigation }){
 
 	const handleMy = () => { setReload({ type : 'MY_RECIPES' }); }
 
+	const handleAll = () => { setReload({ type : 'ALL' }); }
+
 	const recipeRender = ({ item }) => (
   	<View>
     	<Text>{item.title}</Text>
@@ -129,12 +131,17 @@ export default function Recipes({ navigation }){
 					)
 				}
 
-				{ loading.loading && <Text testID="loadiv"> Loading {loading.obj}...</Text> }
+				{ loading.loading && <Text testID="load-txt"> Loading {loading.obj}...</Text> }
 				{ loading.error && <Text testID="error"> { loading.error } </Text> }
 			</View>
 
 			<Appbar style={styles.bottom}>
-		    <Appbar.Action testID="my-recipes" icon="mail" onPress={handleMy} />
+
+				<Appbar.Action testID="all-recipes" icon="mail" 
+					onPress={handleAll} disabled={loading.loading} />
+		    <Appbar.Action testID="my-recipes" icon="mail" 
+		    	onPress={handleMy} disabled={loading.loading} />
+		    	
 		  </Appbar>
 	  </>
 	);

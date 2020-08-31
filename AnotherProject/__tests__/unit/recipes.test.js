@@ -8,6 +8,8 @@ jest.mock('../../src/services/api');
 
 jest.setTimeout(20000);
 
+///jest.useFakeTimers();
+
 test('renders correctly', () => {
   const component = render(<Recipes />).toJSON();
   expect(component).toMatchSnapshot();
@@ -26,25 +28,67 @@ describe('Fetching recipes', () => {
 
 	test('Load only user\'s created recipes', async () => {
 
-		//await act(async () => {
+			const component = render(<Recipes navigation={null} />);
+			
+			await act(async () => {
+
+				const { getByTestId } = component;
+
+				await waitFor(() => getByTestId('recipes-list'));
+
+				const button = getByTestId('my-recipes');
+
+				fireEvent.press(button);
+
+				await (async () => {
+
+					// The button must be disabled during loading...
+					expect(button.props.disabled).toBe(true);
+
+					await waitFor(() => getByTestId('load-txt'));
+
+					await waitForElementToBeRemoved(() => getByTestId('load-txt'));
+
+					const after = component.toJSON();
+
+					expect(after).toMatchSnapshot();
+
+				});
+
+			});
+
+	});
+
+	test('Load all the recipes', async () => {
 
 			const component = render(<Recipes navigation={null} />);
 			
-			const { getByTestId } = component;
+			await act(async () => {
 
-			await waitFor(() => getByTestId('recipes-list'));
+				const { getByTestId } = component;
 
-			fireEvent.press(getByTestId('my-recipes'));
+				await waitFor(() => getByTestId('recipes-list'));
 
-			await waitFor(() => getByTestId('loadiv'), { timeout: 19000 });
+				const button = getByTestId('all-recipes');
 
-			await waitForElementToBeRemoved(() => getByTestId('loadiv'));
+				fireEvent.press(button);
 
-			const after = component.toJSON();
+				await (async () => {
 
-			expect(after).toMatchSnapshot();
+					// The button must be disabled during loading...
+					expect(button.props.disabled).toBe(true);
 
-		//});
+					await waitFor(() => getByTestId('load-txt'));
+
+					await waitForElementToBeRemoved(() => getByTestId('load-txt'));
+
+					const after = component.toJSON();
+
+					expect(after).toMatchSnapshot();
+
+				});
+			
+			});
 
 	});
 
