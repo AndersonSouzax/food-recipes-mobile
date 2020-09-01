@@ -105,3 +105,47 @@ describe('Fetching recipes', () => {
 
 });
 
+test('User log out', async () => {
+
+	const navigationMock = { dispatch: jest.fn() };
+
+	const component = render(<Recipes navigation={navigationMock} />);
+
+	await act(async () => {
+
+		const { getByTestId } = component;
+
+		await waitFor(() => getByTestId('recipes-list'));
+
+		const button = getByTestId('logout-prs');
+
+		await fireEvent.press(button);
+
+		expect(navigationMock.dispatch.mock.calls.length).toBe(1);
+
+	});
+
+	tes('Navigate to Single Recipe for Creation/Editing', async () => {
+
+		const navigationMock = { navigate: jest.fn() };
+
+		const component = render(<Recipes navigation={navigationMock} />);
+
+		await act(async () => {
+
+			const { getByTestId } = component;
+
+			await waitFor(() => getByTestId('recipes-list'));
+
+			const recipesList = getByTestId('recipes-list');
+// continue...
+// 			await fireEvent.press(recipe);
+// 
+// 			expect(navigationMock.dispatch.mock.calls.length).toBe(1);
+// 
+// 			expect(navigationMock.dispatch.mock.calls[0][0]).toBe(1);
+
+		});
+	});
+});
+

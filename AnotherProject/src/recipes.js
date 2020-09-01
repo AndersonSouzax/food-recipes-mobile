@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import { CommonActions } from '@react-navigation/native';
 
 import { 
 	StyleSheet, 
@@ -109,6 +110,27 @@ export default function Recipes({ navigation }){
 
 	const handleAll = () => { setReload({ type : 'ALL' }); }
 
+	const handleLogout = async () => {
+
+		try{
+
+			await AsyncStorage.removeItem('FoodRecipeToken');
+
+			const resetAction = CommonActions.reset({
+      	index: 0,
+      	routes: [
+        		{ name: 'Login' },
+      		],
+    	});
+
+			navigation.dispatch(resetAction);
+
+		}catch(e){
+			setLoading({ loading: false, obj: '', 
+				error: 'An error occurred while removing user token and logging out'});
+		}
+	}
+
 	const recipeRender = ({ item }) => (
   	<View>
     	<Text>{item.title}</Text>
@@ -117,6 +139,13 @@ export default function Recipes({ navigation }){
 
 	return (
 		<>
+    <Appbar.Header>
+
+      <Appbar.Action testID="logout-prs" icon="magnify" 
+      	onPress={handleLogout} disabled={loading.loading}/>
+
+    </Appbar.Header>
+
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
 				<Text>Lots and lots of recipes...</Text>
@@ -141,7 +170,7 @@ export default function Recipes({ navigation }){
 					onPress={handleAll} disabled={loading.loading} />
 		    <Appbar.Action testID="my-recipes" icon="mail" 
 		    	onPress={handleMy} disabled={loading.loading} />
-		    	
+
 		  </Appbar>
 	  </>
 	);
