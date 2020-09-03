@@ -125,27 +125,30 @@ test('User log out', async () => {
 
 	});
 
-	tes('Navigate to Single Recipe for Creation/Editing', async () => {
+});
 
-		const navigationMock = { navigate: jest.fn() };
+test('Navigate to Single Recipe for Creation/Editing', async () => {
 
-		const component = render(<Recipes navigation={navigationMock} />);
+	const navigationMock = { navigate: jest.fn() };
 
-		await act(async () => {
+	const component = render(<Recipes navigation={navigationMock} />);
 
-			const { getByTestId } = component;
+	await act(async () => {
 
-			await waitFor(() => getByTestId('recipes-list'));
+		const { getByTestId, getAllByAccessibilityLabel } = component;
 
-			const recipesList = getByTestId('recipes-list');
-// continue...
-// 			await fireEvent.press(recipe);
-// 
-// 			expect(navigationMock.dispatch.mock.calls.length).toBe(1);
-// 
-// 			expect(navigationMock.dispatch.mock.calls[0][0]).toBe(1);
+		await waitFor(() => getByTestId('recipes-list'));
 
-		});
+		const recipesList = component.getAllByAccessibilityLabel('A Recipe');
+
+		const recipe = recipesList[0];
+
+		await fireEvent.press(recipe);
+
+		expect(navigationMock.navigate.mock.calls.length).toBe(1);
+
+		expect(navigationMock.navigate.mock.calls[0][1]).not.toBeNull();
+
 	});
 });
 

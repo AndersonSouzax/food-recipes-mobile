@@ -131,8 +131,15 @@ export default function Recipes({ navigation }){
 		}
 	}
 
+	const navigateToSingle = (item) => {
+  	navigation.navigate('SingleRecipe', {
+  		recipe : item,
+  		user : stored,
+  	});
+  }
+
 	const recipeRender = ({ item }) => (
-  	<View>
+  	<View accessibilityLabel="A Recipe" onPress={ () => { navigateToSingle(item); } }>
     	<Text>{item.title}</Text>
   	</View>
 	);
@@ -140,6 +147,8 @@ export default function Recipes({ navigation }){
 	return (
 		<>
     <Appbar.Header>
+
+    	<Appbar.Content title="Food Recipes"/>
 
       <Appbar.Action testID="logout-prs" icon="magnify" 
       	onPress={handleLogout} disabled={loading.loading}/>
@@ -154,7 +163,11 @@ export default function Recipes({ navigation }){
 					recipes && ( 
 						recipes.length > 0 ?
 							<FlatList testID="recipes-list" data={recipes} 
-								renderItem={recipeRender} keyExtractor={ () => '_' + Math.random().toString(36).substr(2, 9) } /> 
+								renderItem={recipeRender} 
+								keyExtractor={ () => '_' + Math.random()
+								.toString(36)
+								.substr(2, 9) 
+							} />
 						: 
 							<Text> No recipes received for the token...</Text>
 					)

@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Login from './login';
 import SignUp from './signup';
 import Recipes from './recipes';
+import SingleRecipe from './single-recipe';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +58,7 @@ export default function Routes () {
 					</>
 	 				) : (
 	 					<Stack.Screen name="Recipes" component={Recipes} />
+	 					<Stack.Screen name="SingleRecipe" component={SingleRecipe} />
 	 				) } 
 		  </Stack.Navigator>
 		</NavigationContainer>
