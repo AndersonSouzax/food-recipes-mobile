@@ -42,7 +42,7 @@ export default function Routes () {
 	if(user.loading){
 		return ( 
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<Text>Loading...</Text>
+				<Text>Loading... {user.error}</Text>
 			</View>
 		);
 	}
@@ -57,8 +57,10 @@ export default function Routes () {
 						<Stack.Screen name="SignUp" component={SignUp} />
 					</>
 	 				) : (
-	 					<Stack.Screen name="Recipes" component={Recipes} />
-	 					<Stack.Screen name="SingleRecipe" component={SingleRecipe} />
+	 					<>
+	 						<Stack.Screen name="Recipes" component={Recipes} />
+	 						<Stack.Screen name="SingleRecipe" component={SingleRecipe} />
+	 					</>
 	 				) } 
 		  </Stack.Navigator>
 		</NavigationContainer>

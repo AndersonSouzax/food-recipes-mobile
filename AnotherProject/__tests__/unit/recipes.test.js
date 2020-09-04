@@ -117,11 +117,17 @@ test('User log out', async () => {
 
 		await waitFor(() => getByTestId('recipes-list'));
 
-		const button = getByTestId('logout-prs');
+		fireEvent.press(getByTestId('user-menu'));
 
-		await fireEvent.press(button);
+		await (async () => {
 
-		expect(navigationMock.dispatch.mock.calls.length).toBe(1);
+			const button = getByTestId('logout-prs');
+
+			await fireEvent.press(button);
+
+			expect(navigationMock.dispatch.mock.calls.length).toBe(1);
+
+		});
 
 	});
 

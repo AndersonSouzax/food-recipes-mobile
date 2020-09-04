@@ -46,12 +46,12 @@ export default function Login({ route, navigation }){
 
 				const response = await API.login({ username, password });
 
-				await AsyncStorage.setItem('FoodRecipeToken', response.data);
+				await AsyncStorage.setItem('FoodRecipeToken', JSON.stringify(response.data));
 
 		    const resetAction = CommonActions.reset({
 		      index: 0,
 		      routes: [
-		        { name: 'Main' },
+		        { name: 'Recipes' },
 		      ],
 		    });
 
@@ -96,7 +96,7 @@ export default function Login({ route, navigation }){
 				value={username} style={styles.input} placeholder="email" />
 			
 			<TextInput onKeyPress={handleKeyPress} onChangeText={handlePassword} 
-				value={password} style={styles.input} placeholder="password"/>
+				value={password} style={styles.input} placeholder="password" secureTextEntry/>
 
 			{ error.length !== 0 && <Text testID="error"> { error } </Text> }
 

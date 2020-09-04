@@ -9,7 +9,7 @@ import {
 	Image,
 	Text, 
 	StatusBar,
-	Pressable 
+	Pressable,
 } from 'react-native';
 
 import { 
@@ -19,7 +19,7 @@ import {
 	buttonTxt,
 } from './styles';
 
-import { Appbar } from 'react-native-paper';
+import { Appbar, Menu } from 'react-native-paper';
 
 import API from './services/api';
 
@@ -29,6 +29,7 @@ export default function Recipes({ navigation }){
 	const [loading, setLoading] = useState({ loading: false, error: '', obj : '' });
 	const [reload, setReload] = useState({ type : 'ALL' });
 	const [stored, setStored] = useState(null);
+	const [menuVisible, setMenuVisible] = useState(false);
 
 	useEffect(() => {
 
@@ -116,12 +117,7 @@ export default function Recipes({ navigation }){
 
 			await AsyncStorage.removeItem('FoodRecipeToken');
 
-			const resetAction = CommonActions.reset({
-      	index: 0,
-      	routes: [
-        		{ name: 'Login' },
-      		],
-    	});
+			const resetAction = CommonActions.goBack();
 
 			navigation.dispatch(resetAction);
 
@@ -138,6 +134,10 @@ export default function Recipes({ navigation }){
   	});
   }
 
+  const openMenu = () => setMenuVisible(true);
+
+  const closeMenu = () => setMenuVisible(false);
+
 	const recipeRender = ({ item }) => (
   	<View accessibilityLabel="A Recipe" onPress={ () => { navigateToSingle(item); } }>
     	<Text>{item.title}</Text>
@@ -146,18 +146,29 @@ export default function Recipes({ navigation }){
 
 	return (
 		<>
-    <Appbar.Header>
+    <Appbar.Header style={styles.appBar}>
 
-    	<Appbar.Content title="Food Recipes"/>
+    	<Appbar.Content title="Food Recipes" style={styles.title}/>
 
-      <Appbar.Action testID="logout-prs" icon="magnify" 
-      	onPress={handleLogout} disabled={loading.loading}/>
+    	<Menu
+			  onDismiss={closeMenu}
+			  visible={menuVisible}
+			  anchor={
+			     <Appbar.Action
+			     	testID="user-menu"
+			      disabled={loading.loading}
+			      color="white"
+			      icon="face"
+			      onPress={openMenu}
+			     />
+			   }>
+			  <Menu.Item testID="logout-prs" icon="undo" 
+			  	title="Logout" onPress={handleLogout} />
+			</Menu>
 
     </Appbar.Header>
 
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-				<Text>Lots and lots of recipes...</Text>
 
 				{ 
 					recipes && ( 
@@ -173,8 +184,8 @@ export default function Recipes({ navigation }){
 					)
 				}
 
-				{ loading.loading && <Text testID="load-txt"> Loading {loading.obj}...</Text> }
-				{ loading.error && <Text testID="error"> { loading.error } </Text> }
+				{ loading.loading === true && <Text testID="load-txt"> Loading {loading.obj}...</Text> }
+				{ loading.error === true && <Text testID="error"> { loading.error } </Text> }
 			</View>
 
 			<Appbar style={styles.bottom}>
@@ -191,10 +202,18 @@ export default function Recipes({ navigation }){
 
 const styles = StyleSheet.create({
   bottom: {
+  	backgroundColor: '#EA1D2C',
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
   },
+  appBar: {
+  	backgroundColor: '#EA1D2C',
+  },
+  title : {
+  	fontFamily: 'cursive',
+		fontWeight: 'bold',	
+  }
 });
 

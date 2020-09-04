@@ -3,5 +3,6 @@ export const StackActions = {
 };
 
 export const CommonActions = {
-	reset : (p) => 1
+	reset : (p) => 1,
+	goBack: (p) => 1,
 };

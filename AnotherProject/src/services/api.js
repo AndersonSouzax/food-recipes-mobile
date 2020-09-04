@@ -6,7 +6,7 @@ class API {
 
 		this.loginAdress = 'https://receitas.devari.com.br/authentication/';
 
-		this.baseURL: 'https://receitas.devari.com.br/api/v1';
+		this.baseURL = 'https://receitas.devari.com.br/api/v1';
 
 	}
 

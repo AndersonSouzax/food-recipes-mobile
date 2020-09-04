@@ -67,6 +67,7 @@ exports[`correctly accepts the credentials cleans any error presented 1`] = `
     onKeyPress={[Function]}
     placeholder="password"
     rejectResponderTermination={true}
+    secureTextEntry={true}
     style={
       Object {
         "alignSelf": "stretch",
@@ -233,6 +234,7 @@ exports[`correctly accepts the credentials cleans any error presented 2`] = `
     onKeyPress={[Function]}
     placeholder="password"
     rejectResponderTermination={true}
+    secureTextEntry={true}
     style={
       Object {
         "alignSelf": "stretch",
@@ -392,6 +394,7 @@ exports[`renders correctly 1`] = `
     onKeyPress={[Function]}
     placeholder="password"
     rejectResponderTermination={true}
+    secureTextEntry={true}
     style={
       Object {
         "alignSelf": "stretch",
@@ -551,6 +554,7 @@ exports[`tries to log in the user too short password was inserted 1`] = `
     onKeyPress={[Function]}
     placeholder="password"
     rejectResponderTermination={true}
+    secureTextEntry={true}
     style={
       Object {
         "alignSelf": "stretch",
