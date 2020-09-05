@@ -1,5 +1,8 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { 
+	useState, useEffect, 
+	createContext, useReducer, useMemo 
+} from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -14,7 +17,34 @@ const Stack = createStackNavigator();
 
 export default function Routes () {
 
-	const [user, setUser] = useState({ loading : true, stored : null, error : '' });
+	const [user, dispatch] = useReducer((prevState, action) => {
+      switch (action.type) {
+        case 'RESTORE_TOKEN':
+          return {
+            ...prevState,
+            stored: action.user,
+            loading: false,
+            error: action.error,
+          };
+        case 'SIGN_IN':
+          return {
+            ...prevState,
+            loading: false,
+            stored: action.user,
+          };
+        case 'SIGN_OUT':
+          return {
+            ...prevState,
+            stored: null,
+          };
+      }
+    },
+    {
+      loading: true,
+      error: '',
+      stored: null,
+    }
+  );
 
 	useEffect(() => {
 
@@ -26,18 +56,43 @@ export default function Routes () {
 
 		    if(value !== null) {
 		    	const token = JSON.parse(value);
-		      setUser({ ...user, loading : false, stored : token });
+		      dispatch({ type: 'RESTORE_TOKEN', user: token, error : '' });
 		    }else{
-		    	setUser({ ...user, loading : false });
+		    	dispatch({ type: 'RESTORE_TOKEN', user: null, error : '' });
 		    }
 		  } catch(e) {
-		    setUser({...user, loading : false, error : 'Exception on AsyncStorage'});
+		  	dispatch({ 
+		  		type: 'RESTORE_TOKEN', user: null, error : 'Exception on AsyncStorage'
+		  	});
 		  }
 		}
 
 	seach();
 
 	}, []);
+
+	const authContext = useMemo(
+    () => ({
+      signIn: async data => {
+        // In a production app, we need to send some data (usually username, password) to server and get a token
+        // We will also need to handle errors if sign in failed
+        // After getting token, we need to persist the token using `AsyncStorage`
+        // In the example, we'll use a dummy token
+
+        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+      },
+      signOut: () => dispatch({ type: 'SIGN_OUT' }),
+      signUp: async data => {
+        // In a production app, we need to send user data to server and get a token
+        // We will also need to handle errors if sign up failed
+        // After getting token, we need to persist the token using `AsyncStorage`
+        // In the example, we'll use a dummy token
+
+        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+      },
+    }),
+    []
+  );
 
 	if(user.loading){
 		return ( 

@@ -4,9 +4,9 @@ class API {
 
 	constructor(){
 
-		this.loginAdress = 'https://receitas.devari.com.br/authentication/';
+		this.loginAdress = 'http://192.168.11.25:3030/authentication/';
 
-		this.baseURL = 'https://receitas.devari.com.br/api/v1';
+		this.baseURL = 'https://192.168.11.25:3030/api/v1';
 
 	}
 
