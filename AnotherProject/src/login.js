@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { 
 	StyleSheet, 
@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { CommonActions } from '@react-navigation/native';
 
 import API from './services/api';
+import { AuthContext } from './authcontext';
 
 import { 
 	title, 
@@ -34,6 +35,8 @@ export default function Login({ route, navigation }){
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState(message ? message : '');
 
+	const context = useContext(AuthContext);
+
 	const handleSignInPress = async () => {
 
 		if(password.length < 6){ 
@@ -47,15 +50,8 @@ export default function Login({ route, navigation }){
 				const response = await API.login({ username, password });
 
 				await AsyncStorage.setItem('FoodRecipeToken', JSON.stringify(response.data));
-
-		    const resetAction = CommonActions.reset({
-		      index: 0,
-		      routes: [
-		        { name: 'Recipes' },
-		      ],
-		    });
-
-    		navigation.dispatch(resetAction);
+      	
+      	context.signIn(response.data);
 
 			}catch(e){
 				setError('Login error, check your credentials and try again..');

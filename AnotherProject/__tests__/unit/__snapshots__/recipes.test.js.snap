@@ -109,7 +109,7 @@ Array [
           accessibilityRole="button"
           accessibilityState={
             Object {
-              "disabled": false,
+              "disabled": true,
             }
           }
           accessible={true}
@@ -146,7 +146,9 @@ Array [
                   "height": 36,
                   "width": 36,
                 },
-                false,
+                Object {
+                  "opacity": 0.32,
+                },
                 undefined,
               ],
             ]
@@ -234,7 +236,15 @@ Array [
         "justifyContent": "center",
       }
     }
-  />,
+  >
+    <Text
+      testID="load-txt"
+    >
+       Loading 
+      All Recipes
+      ...
+    </Text>
+  </View>,
   <View
     style={
       Object {
@@ -262,7 +272,7 @@ Array [
       accessibilityRole="button"
       accessibilityState={
         Object {
-          "disabled": false,
+          "disabled": true,
         }
       }
       accessible={true}
@@ -299,7 +309,9 @@ Array [
               "height": 36,
               "width": 36,
             },
-            false,
+            Object {
+              "opacity": 0.32,
+            },
             undefined,
           ],
         ]
@@ -380,7 +392,7 @@ Array [
       accessibilityRole="button"
       accessibilityState={
         Object {
-          "disabled": false,
+          "disabled": true,
         }
       }
       accessible={true}
@@ -417,7 +429,9 @@ Array [
               "height": 36,
               "width": 36,
             },
-            false,
+            Object {
+              "opacity": 0.32,
+            },
             undefined,
           ],
         ]

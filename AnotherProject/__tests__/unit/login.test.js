@@ -3,6 +3,8 @@ import React from 'react';
 
 import Login from '../../src/login';
 
+import { AuthContext } from '../../src/authcontext';
+
 import { create, act } from 'react-test-renderer';
 
 jest.mock('../../src/services/api');
@@ -154,9 +156,13 @@ describe('tries to log in the user', () => {
 
 		expect.assertions(1);
 
+		const mockContext = { signIn: jest.fn() }
+
 		act(() => { 
 			component = create(
-				<Login navigation={navigationMock} route={{ params:{} }}/>
+				<AuthContext.Provider value={mockContext}>
+					<Login navigation={navigationMock} route={{ params:{} }}/>
+				</AuthContext.Provider>
 			); 
 		});
 
@@ -172,7 +178,7 @@ describe('tries to log in the user', () => {
 
 		await act(async () => { await loginButton.props.onPress(); });
 
-		expect(navigationMock.dispatch.mock.calls.length).toBe(1);
+		expect(mockContext.signIn.mock.calls.length).toBe(1);
 
 	});
 

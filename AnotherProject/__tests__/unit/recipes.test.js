@@ -2,16 +2,21 @@ import 'react-native';
 import React from 'react';
 import { render, waitFor, act, fireEvent } from '@testing-library/react-native';
 
+import { AuthContext } from '../../src/authcontext';
 import Recipes from '../../src/recipes';
+
+import { Provider as PaperProvider } from 'react-native-paper';
 
 jest.mock('../../src/services/api');
 
 jest.setTimeout(20000);
 
-///jest.useFakeTimers();
+const mockRoute = { 
+	params: { user : { token: '9340349njfnidfbuierf', name : 'And', id : 2 } }
+};
 
 test('renders correctly', () => {
-  const component = render(<Recipes />).toJSON();
+  const component = render(<Recipes route={mockRoute}/>).toJSON();
   expect(component).toMatchSnapshot();
 });
 
@@ -20,7 +25,9 @@ describe('Fetching recipes', () => {
 
 	test('Display all the recipes after loading', async () => {
 
-		const { getByTestId } = render(<Recipes navigation={null} />);
+		const { getByTestId } = render(
+			<Recipes navigation={null} route={mockRoute} />
+		);
 
 		await waitFor(() => getByTestId('recipes-list'), { timeout: 19000 });
 
@@ -28,7 +35,7 @@ describe('Fetching recipes', () => {
 
 	test('Load only user\'s created recipes', async () => {
 
-			const component = render(<Recipes navigation={null} />);
+			const component = render(<Recipes navigation={null} route={mockRoute} />);
 			
 			await act(async () => {
 
@@ -61,7 +68,7 @@ describe('Fetching recipes', () => {
 
 	test('Load all the recipes', async () => {
 
-			const component = render(<Recipes navigation={null} />);
+			const component = render(<Recipes navigation={null} route={mockRoute} />);
 			
 			await act(async () => {
 
@@ -109,7 +116,15 @@ test('User log out', async () => {
 
 	const navigationMock = { dispatch: jest.fn() };
 
-	const component = render(<Recipes navigation={navigationMock} />);
+	const mockContext = { signOut: jest.fn() }
+
+	const component = render(
+		
+			<AuthContext.Provider value={mockContext}>
+				<Recipes navigation={navigationMock} route={mockRoute} />
+			</AuthContext.Provider>
+		
+	);
 
 	await act(async () => {
 
@@ -125,7 +140,7 @@ test('User log out', async () => {
 
 			await fireEvent.press(button);
 
-			expect(navigationMock.dispatch.mock.calls.length).toBe(1);
+			expect(mockContext.signOut.mock.calls.length).toBe(1);
 
 		});
 
@@ -137,7 +152,9 @@ test('Navigate to Single Recipe for Creation/Editing', async () => {
 
 	const navigationMock = { navigate: jest.fn() };
 
-	const component = render(<Recipes navigation={navigationMock} />);
+	const component = render(
+		<Recipes navigation={navigationMock} route={mockRoute} />
+	);
 
 	await act(async () => {
 

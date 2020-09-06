@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { CommonActions } from '@react-navigation/native';
 
@@ -22,47 +22,52 @@ import {
 import { Appbar, Menu } from 'react-native-paper';
 
 import API from './services/api';
+import { AuthContext } from './authcontext';
 
-export default function Recipes({ navigation }){
+export default function Recipes({ route, navigation }){
+
+	const { user } = route.params;
 
 	const [recipes, setRecipes] = useState(null);
 	const [loading, setLoading] = useState({ loading: false, error: '', obj : '' });
 	const [reload, setReload] = useState({ type : 'ALL' });
-	const [stored, setStored] = useState(null);
+	const [stored, setStored] = useState(user);
 	const [menuVisible, setMenuVisible] = useState(false);
 
-	useEffect(() => {
+	const context = useContext(AuthContext);
 
-		const getStorage = async () => {
-
-			try {
-
-	    	const value = await AsyncStorage.getItem('FoodRecipeToken');
-
-		    if(value !== null) {
-
-		    	const token = JSON.parse(value);
-
-		      setStored(token);
-
-		    }else{
-
-		    	setLoading({ loading : false, obj : '', 
-		    		error: 'Missing user token, reload the page!' });
-
-		    }
-
-		  } catch(e) {
-
-		    setLoading({ loading : false, obj : '', 
-		    	error: `Exception getting the token: ${e.message}. Reload the page` });
-
-		  }
-		};
-
-		getStorage();
-
-	}, []);
+// 	useEffect(() => {
+// 
+// 		const getStorage = async () => {
+// 
+// 			try {
+// 
+// 	    	const value = await AsyncStorage.getItem('FoodRecipeToken');
+// 
+// 		    if(value !== null) {
+// 
+// 		    	const token = JSON.parse(value);
+// 
+// 		      setStored(token);
+// 
+// 		    }else{
+// 
+// 		    	setLoading({ loading : false, obj : '', 
+// 		    		error: 'Missing user token, reload the page!' });
+// 
+// 		    }
+// 
+// 		  } catch(e) {
+// 
+// 		    setLoading({ loading : false, obj : '', 
+// 		    	error: `Exception getting the token: ${e.message}. Reload the page` });
+// 
+// 		  }
+// 		};
+// 
+// 		getStorage();
+// 
+// 	}, []);
 
 	// Function related to the same hook: recipes
 	useEffect(() => {

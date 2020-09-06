@@ -1,7 +1,10 @@
 import 'react-native-gesture-handler';
 import React, { 
-	useState, useEffect, 
-	createContext, useReducer, useMemo 
+	useState, 
+	useEffect, 
+	createContext, 
+	useReducer, 
+	useMemo 
 } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +15,8 @@ import Login from './login';
 import SignUp from './signup';
 import Recipes from './recipes';
 import SingleRecipe from './single-recipe';
+
+import { AuthContext } from './authcontext';
 
 const Stack = createStackNavigator();
 
@@ -71,24 +76,17 @@ export default function Routes () {
 
 	}, []);
 
-	const authContext = useMemo(
-    () => ({
+	const authenticationContext = useMemo(() => ({
       signIn: async data => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: 'SIGN_IN', stored: data });
+
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: 'SIGN_IN', stored: data });
+
       },
     }),
     []
@@ -104,20 +102,23 @@ export default function Routes () {
 
 	return ( 
 		<NavigationContainer>
-		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-		    { user.stored === null ? (
-		    	<> 
-						<Stack.Screen name="Login" component={Login}
-							initialParams={{ message: user.error ? user.error : null }}/>
-						<Stack.Screen name="SignUp" component={SignUp} />
-					</>
-	 				) : (
-	 					<>
-	 						<Stack.Screen name="Recipes" component={Recipes} />
-	 						<Stack.Screen name="SingleRecipe" component={SingleRecipe} />
-	 					</>
-	 				) } 
-		  </Stack.Navigator>
+			<AuthContext.Provider value={authenticationContext}>
+			  <Stack.Navigator screenOptions={{ headerShown: false }}>
+			    { user.stored === null ? (
+			    	<> 
+							<Stack.Screen name="Login" component={Login}
+								initialParams={{ message: user.error ? user.error : null }}/>
+							<Stack.Screen name="SignUp" component={SignUp} />
+						</>
+		 				) : (
+		 					<>
+		 						<Stack.Screen name="Recipes" component={Recipes} 
+		 							initialParams={{ user : user.stored }}/>
+		 						<Stack.Screen name="SingleRecipe" component={SingleRecipe} />
+		 					</>
+		 				) } 
+			  </Stack.Navigator>
+			</AuthContext.Provider>
 		</NavigationContainer>
 	);
  };
