@@ -6,7 +6,7 @@ class API {
 
 		this.loginAdress = 'http://192.168.11.25:3030/authentication/';
 
-		this.baseURL = 'https://192.168.11.25:3030/api/v1';
+		this.baseURL = 'http://192.168.11.25:3030/api/v1';
 
 	}
 

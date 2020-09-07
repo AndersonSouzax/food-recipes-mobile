@@ -76,7 +76,7 @@ export default function Recipes({ route, navigation }){
 
 		const fetchAll = async () => { 
 
-			if(loading.loading || stored === null){ return; }
+			if(loading.loading){ return; }
 
 			try{
 
@@ -122,9 +122,7 @@ export default function Recipes({ route, navigation }){
 
 			await AsyncStorage.removeItem('FoodRecipeToken');
 
-			const resetAction = CommonActions.goBack();
-
-			navigation.dispatch(resetAction);
+			context.signOut();
 
 		}catch(e){
 			setLoading({ loading: false, obj: '', 
@@ -151,6 +149,9 @@ export default function Recipes({ route, navigation }){
 
 	return (
 		<>
+
+		<StatusBar hidden />
+
     <Appbar.Header style={styles.appBar}>
 
     	<Appbar.Content title="Food Recipes" style={styles.title}/>
@@ -189,8 +190,8 @@ export default function Recipes({ route, navigation }){
 					)
 				}
 
-				{ loading.loading === true && <Text testID="load-txt"> Loading {loading.obj}...</Text> }
-				{ loading.error === true && <Text testID="error"> { loading.error } </Text> }
+				{ loading.loading ? <Text testID="load-txt"> Loading {loading.obj}...</Text> : <></> }
+				{ loading.error ? <Text testID="error"> { loading.error } </Text> : <></> }
 			</View>
 
 			<Appbar style={styles.bottom}>

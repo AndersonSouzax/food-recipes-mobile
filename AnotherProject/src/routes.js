@@ -79,13 +79,13 @@ export default function Routes () {
 	const authenticationContext = useMemo(() => ({
       signIn: async data => {
 
-        dispatch({ type: 'SIGN_IN', stored: data });
+        dispatch({ type: 'SIGN_IN', user: data });
 
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async data => {
 
-        dispatch({ type: 'SIGN_IN', stored: data });
+        dispatch({ type: 'SIGN_IN', user: data });
 
       },
     }),

@@ -118,12 +118,14 @@ test('User log out', async () => {
 
 	const mockContext = { signOut: jest.fn() }
 
+
 	const component = render(
-		
-			<AuthContext.Provider value={mockContext}>
-				<Recipes navigation={navigationMock} route={mockRoute} />
-			</AuthContext.Provider>
-		
+		<AuthContext.Provider value={mockContext}>
+			<PaperProvider>
+				<Recipes navigation={navigationMock} route={mockRoute} />	
+			</PaperProvider>
+				
+		</AuthContext.Provider>
 	);
 
 	await act(async () => {
@@ -132,18 +134,18 @@ test('User log out', async () => {
 
 		await waitFor(() => getByTestId('recipes-list'));
 
-		fireEvent.press(getByTestId('user-menu'));
+		const menu = getByTestId('user-menu');
+		
+		fireEvent.press(menu);
 
-		await (async () => {
+		await waitFor(() => getByTestId('logout-prs'));
 
-			const button = getByTestId('logout-prs');
+		const button = getByTestId('logout-prs');
 
-			await fireEvent.press(button);
+		await fireEvent.press(button);
 
-			expect(mockContext.signOut.mock.calls.length).toBe(1);
-
-		});
-
+		expect(mockContext.signOut.mock.calls.length).toBe(1);
+		
 	});
 
 });
