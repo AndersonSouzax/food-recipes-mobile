@@ -65,6 +65,7 @@ Array [
                 "alignItems": "center",
               },
               Object {
+                "alignItems": "center",
                 "fontFamily": "cursive",
                 "fontWeight": "bold",
               },
@@ -232,7 +233,8 @@ Array [
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
+        "flexGrow": 0,
+        "height": "77%",
         "justifyContent": "center",
       }
     }
@@ -241,7 +243,7 @@ Array [
       testID="load-txt"
     >
        Loading 
-      All Recipes
+      All The Recipes
       ...
     </Text>
   </View>,
@@ -252,8 +254,10 @@ Array [
         "backgroundColor": "#EA1D2C",
         "bottom": 0,
         "elevation": 4,
+        "flex": 1,
         "flexDirection": "row",
         "height": 56,
+        "justifyContent": "space-around",
         "left": 0,
         "paddingHorizontal": 4,
         "position": "absolute",
@@ -382,7 +386,7 @@ Array [
                 ]
               }
             >
-              󰺻
+              󰈰
             </Text>
           </View>
         </View>
@@ -502,7 +506,7 @@ Array [
                 ]
               }
             >
-              󰺻
+              󰇳
             </Text>
           </View>
         </View>

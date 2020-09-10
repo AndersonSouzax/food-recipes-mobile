@@ -172,7 +172,17 @@ test('Navigate to Single Recipe for Creation/Editing', async () => {
 
 		expect(navigationMock.navigate.mock.calls.length).toBe(1);
 
-		expect(navigationMock.navigate.mock.calls[0][1]).not.toBeNull();
+		const obj = navigationMock.navigate.mock.calls[0][1];
+
+		expect(obj).not.toBeNull();
+
+		var size = 0, key;
+    
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+    }
+
+    expect(size).toBe(2);
 
 	});
 });

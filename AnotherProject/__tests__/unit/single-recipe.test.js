@@ -4,6 +4,8 @@ import { render, waitFor, act, fireEvent } from '@testing-library/react-native';
 
 import SingleRecipe from '../../src/single-recipe';
 
+import { Provider as PaperProvider } from 'react-native-paper';
+
 const mockRoute = { 
 	params: { 
 		recipe : { id: 1, title : 'Fish', user : { id: 1 },
@@ -11,7 +13,8 @@ const mockRoute = {
       category : { id : 1, name : "Japonese Food", 
           image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg' 
       } 
-    }
+    },
+    user : { id : 1 }
   }
 };
 
@@ -36,4 +39,35 @@ test('Go back to the recipes list', () => {
 
 });
 
+test('Make user\'s recipe editable', async () => {
+
+	const component = render(
+		<PaperProvider>
+			<SingleRecipe route={mockRoute} />
+		</PaperProvider>
+	);
+
+	const { getByTestId } = component;
+
+	const options = getByTestId('options');
+
+	fireEvent.press(options);
+
+	await act(async () => {	
+
+		await waitFor(() => getByTestId('editReciple'));
+		
+		const editButton = getByTestId('editReciple');
+
+		fireEvent.press(editButton);
+
+		await waitFor(() => getByTestId('description'));
+
+		const compJson = component.toJSON();
+
+		expect(compJson).toMatchSnapshot();
+
+	});
+
+});
 

@@ -151,7 +151,7 @@ export default function Recipes({ route, navigation }){
 			  	title="Logout" onPress={handleLogout} 
 			  	style={styles.menuItem}/>
 
-			  <Menu.Item testID="logout-prs" icon="fruit-watermelon"
+			  <Menu.Item testID="navigate-single" icon="fruit-watermelon"
 			  	title="Add Recipe" onPress={ () => { navigateToSingle(); } } 
 			  	style={styles.menuItem}/>
 
