@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { 
+import {
 	StyleSheet,
 	View,
 	Image,
@@ -9,7 +9,27 @@ import {
 	Pressable,
 } from 'react-native';
 
-export default function SingleRecipe({ navigation }){
+import { Appbar } from 'react-native-paper';
 
-	return (<Text>reeeeeeeeeeee</Text>);
+export default function SingleRecipe({ navigation, route }){
+
+	const back = () => { navigation.goBack(); };
+
+	return (
+		<>
+
+			<Appbar.Header style={styles.appBar}>
+
+	    	<Appbar.BackAction testID="backButton" onPress={() => { back(); }} />
+
+	    </Appbar.Header>
+			<Text>reeeeeeeeeeee</Text>
+		</>
+	);
 }
+
+const styles = StyleSheet.create({
+  appBar: {
+  	backgroundColor: '#EA1D2C',
+  },
+});

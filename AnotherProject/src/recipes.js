@@ -98,10 +98,14 @@ export default function Recipes({ route, navigation }){
 	}
 
 	const navigateToSingle = (item) => {
+
+		if(menuVisible){ closeMenu(); }
+
   	navigation.navigate('SingleRecipe', {
   		recipe : item,
   		user : stored,
   	});
+
   }
 
   const openMenu = () => setMenuVisible(true);
@@ -117,8 +121,7 @@ export default function Recipes({ route, navigation }){
     	<Card.Content>
       	<Title>{item.title || 'Recipe Title' }</Title>
       	<Paragraph>{ item.description || 'Delicious food...'}</Paragraph>
-    	</Card.Content>
-    	
+    	</Card.Content>	
   	</Card>
 	);
 
