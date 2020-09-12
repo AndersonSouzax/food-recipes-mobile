@@ -6,6 +6,8 @@ import SingleRecipe from '../../src/single-recipe';
 
 import { Provider as PaperProvider } from 'react-native-paper';
 
+jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
+
 const mockRoute = { 
 	params: { 
 		recipe : { id: 1, title : 'Fish', user : { id: 1 },
@@ -19,8 +21,13 @@ const mockRoute = {
 };
 
 test('Renders correctly', () => {
-  const component = render(<SingleRecipe route={mockRoute}/>).toJSON();
-  expect(component).toMatchSnapshot();
+  const component = render(
+  	<PaperProvider>
+  		<SingleRecipe route={mockRoute}/>
+  	</PaperProvider>
+  );
+  const componentJS = component.toJSON();
+  expect(componentJS).toMatchSnapshot();
 });
 
 test('Go back to the recipes list', () => {
@@ -28,7 +35,9 @@ test('Go back to the recipes list', () => {
 	const navigationMock = { goBack: jest.fn() };
 
 	const { getByTestId } = render(
-		<SingleRecipe navigation={navigationMock} route={mockRoute} />
+		<PaperProvider>
+			<SingleRecipe navigation={navigationMock} route={mockRoute} />
+		</PaperProvider>
 	);
 
 	const backButton = getByTestId('backButton');
@@ -61,13 +70,63 @@ test('Make user\'s recipe editable', async () => {
 
 		fireEvent.press(editButton);
 
-		await waitFor(() => getByTestId('description'));
+		await(async () => {
 
-		const compJson = component.toJSON();
+			await waitFor(() => getByTestId('description'));
 
-		expect(compJson).toMatchSnapshot();
+			const compJson = component.toJSON();
+
+			expect(compJson).toMatchSnapshot();
+
+		});
 
 	});
 
 });
 
+test('Deleting recipe correctly', async () => {
+
+	const navigationMock = { goBack: jest.fn() };
+
+	const component = render(
+		<PaperProvider>
+			<SingleRecipe route={mockRoute} navigation={navigationMock}/>
+		</PaperProvider>
+	);
+
+	const { getByTestId } = component;
+
+	const options = getByTestId('options');
+
+	fireEvent.press(options);
+
+	await act(async () => {	
+
+		await waitFor(() => getByTestId('deleteReciple'));
+		
+		const deleteButton = getByTestId('deleteReciple');
+
+		fireEvent.press(deleteButton);
+
+		await act(async () => {
+
+			await waitFor(() => getByTestId('confirmDelete'));
+
+			const confirm = getByTestId('confirmDelete');
+
+			fireEvent.press(confirm);
+
+			await act(async () => {
+
+				await waitFor(() => getByTestId('loadElement'), { timeout: 19000 });
+
+				await waitForElementToBeRemoved(() => getByTestId('loadElement'));
+
+				// The test gets too weak if only this call is checked...
+				expect(navigationMock.goBack.mock.calls.length).toBe(1);
+
+			});
+		});
+
+	});
+});	
