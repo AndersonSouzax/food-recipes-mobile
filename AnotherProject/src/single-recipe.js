@@ -13,6 +13,8 @@ import {
 	Appbar, TextInput, Menu, 
 	Dialog, Portal, Paragraph, Button } from 'react-native-paper';
 
+import API from './services/api';
+
 export default function SingleRecipe({ navigation, route }){
 
 	const [editing, setEditing] = useState(false);
@@ -27,15 +29,18 @@ export default function SingleRecipe({ navigation, route }){
 
   const closeMenu = () => setMenuVisible(false);
 
-  const showDialog = () => setDialogVisible(true);
+  const showDialog = () => {
+  	closeMenu();
+  	setDialogVisible(true); 
+  }
 
   const hideDialog = () => setDialogVisible(false);
 
 	const back = () => { navigation.goBack(); };
 
 	const makeEditable = () => { 
-		setEditing(true);
 		closeMenu();
+		setEditing(true);
 	};
 
 	const handleEditing = (event) => {
@@ -53,16 +58,20 @@ export default function SingleRecipe({ navigation, route }){
 
 		if(loading.loading){ return; }
 
+		hideDialog();
+
 		setLoading({ loading : true, act : 'Deleting', error : '' });
 
 		try{
 
 			const path = `/recipe/${recipe.id}`;
-
+			
 			//No response...
 			const response = await API.request(path, 'delete', user.token, null);
 
 			setLoading({ ...loading, loading : false });
+
+			navigation.goBack();
 
 		}catch(e){
 
