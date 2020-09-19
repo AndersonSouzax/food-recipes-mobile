@@ -75,13 +75,19 @@ test('Make user\'s recipe editable', async () => {
 
 		fireEvent.press(editButton);
 
-		await(async () => {
+		await act(async () => {
 
-			await waitFor(() => getByTestId('description'));
+			const desc = getByTestId('description');
 
-			const compJson = component.toJSON();
+			/*
+				* Test the informations changing...
+				*/
 
-			expect(compJson).toMatchSnapshot();
+			const event = { target : { testID : 'description', value : 'loveyou' } };
+
+			fireEvent.changeText(desc, event);
+			
+			await waitFor(() => getByTestId('description').props.value === 'loveyou');
 
 		});
 
@@ -115,7 +121,7 @@ test('Deleting recipe correctly', async () => {
 
 		await act(async () => {
 
-			await waitFor(() => getByTestId('confirmDelete'));
+			//await waitFor(() => getByTestId('confirmDelete'));
 
 			const confirm = getByTestId('confirmDelete');
 
@@ -128,11 +134,51 @@ test('Deleting recipe correctly', async () => {
  				// await waitForElementToBeRemoved(() => getByTestId('loadElement'));
 
 				// The test gets too weak if only this call is checked...
-
-				//expect(navigationMock.goBack.mock.calls.length).toBe(1);
+				expect(navigationMock.goBack.mock.calls.length).toBe(1);
 
 			//});
 		});
-
 	});
-});	
+});
+
+test('Updating recipe correctly', async () => {
+
+	const component = render(
+		<PaperProvider>
+			<SingleRecipe route={mockRoute} />
+		</PaperProvider>
+	);
+
+	const { getByTestId } = component;
+
+	const options = getByTestId('options');
+
+	const saveButton = getByTestId('saveButton');
+
+	fireEvent.press(options);
+
+	await waitFor(() => getByTestId('editReciple'));
+	
+	const editButton = getByTestId('editReciple');
+
+	fireEvent.press(editButton);
+
+	await waitFor(() => getByTestId('description'));
+
+	const desc = getByTestId('description');
+
+	const event = { target : { testID : 'description', value : 'loveyou' } };
+
+	fireEvent.changeText(desc, event);
+	
+	await waitFor(() => getByTestId('description').props.value === 'loveyou');
+	
+	await fireEvent.press(saveButton);
+
+	/* The value of view description must be the same that was inserted during editing */
+	await waitFor(() => getByTestId('descView').props.value === 'loveyou');
+
+});
+
+
+

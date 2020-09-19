@@ -9,6 +9,8 @@ import {
 	Pressable,
 } from 'react-native';
 
+import { button, buttonTxt } from './styles';
+
 import { 
 	Appbar, TextInput, Menu, 
 	Dialog, Portal, Paragraph, Button } from 'react-native-paper';
@@ -17,7 +19,6 @@ import API from './services/api';
 
 export default function SingleRecipe({ navigation, route }){
 
-	const [editing, setEditing] = useState(false);
 	const [menuVisible, setMenuVisible] = useState(false);
 	const [dialogVisible, setDialogVisible] = useState(false);
 	const [editingRecipe, setEditingRecipe] = useState({ description : '' });
@@ -40,17 +41,14 @@ export default function SingleRecipe({ navigation, route }){
 
 	const makeEditable = () => { 
 		closeMenu();
-		setEditing(true);
+		setEditingRecipe(Object.assign({}, recipe));
 	};
 
 	const handleEditing = (event) => {
 
-    // const name = event.target.testID;
-    // 
-    // setState({
-    //   ...state,
-    //   [name]: event.target.value,
-    // });
+    const name = event.target.testID;
+
+    setEditingRecipe({ ...editingRecipe, [name]: event.target.value });
 
 	};
 
@@ -80,6 +78,21 @@ export default function SingleRecipe({ navigation, route }){
 		}
 	};
 
+	const handleUpdateOrCreate = async () => {
+
+		hideDialog();
+
+		setLoading({ loading : true, act : 'Deleting', error : '' });
+
+		try{
+
+			
+		}catch(e){
+
+		}
+
+	};
+
 	return (
 		<>
 
@@ -92,7 +105,7 @@ export default function SingleRecipe({ navigation, route }){
 				  onDismiss={closeMenu}
 				  visible={menuVisible}
 				  style={styles.menu}
-				  disabled={editing}
+				  disabled={editingRecipe !== null}
 				  anchor={
 	    			<Appbar.Action testID="options" icon="dots-vertical"
 	    				onPress={openMenu} />
@@ -106,12 +119,27 @@ export default function SingleRecipe({ navigation, route }){
 	    </Appbar.Header>
 
 	    {
-	    	editing ? 
+	    	editingRecipe !== null ? 
 
-	    		<TextInput testID="description" type="flat"
-	    			value={editingRecipe.description} label="Recipe Description"
-	    			multiline={true} />
+	    		<View style={styles.mainView}>
 
+	    			<TextInput testID="description" type="flat"
+	    				value={editingRecipe.description} label="Recipe Description"
+	    				multiline={true} onChangeText={handleEditing}/>
+
+			    	<Pressable onPress={handleUpdateOrCreate} disabled={
+			    		!editingRecipe.title || 
+			    		!editingRecipe.user || 
+			    		!editingRecipe.category ||
+			    		loading.loading
+			    		}
+							testID="saveButton" style={styles.button}>
+							
+							<Text style={styles.buttonTxt}>Save</Text>
+
+						</Pressable>
+
+	    		</View>
 	    		: <Text>{ recipe.description }</Text>
 	    }
 			
@@ -146,5 +174,8 @@ const styles = StyleSheet.create({
   },
   menu : {
     marginTop: '14%',
+  },
+  mainView:{
+
   }
 });
