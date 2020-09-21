@@ -37,6 +37,10 @@ class API {
     
             resolve(this.recipes.filter( x => x.user.id === userId));
 
+          }else if(method === 'put' || method === 'post' ){
+
+            resolve({ data : this.recipes.filter( x => x.user.id === userId)[0] });
+
           }else{
             resolve( { data: this.recipes } )   
           }

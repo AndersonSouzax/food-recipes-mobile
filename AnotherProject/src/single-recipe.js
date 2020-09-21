@@ -23,12 +23,18 @@ export default function SingleRecipe({ navigation, route }){
 	const [dialogVisible, setDialogVisible] = useState(false);
 	const [editingRecipe, setEditingRecipe] = useState({ description : '' });
 	const [loading, setLoading] = useState({ loading : false, error : '', act : '' });
+	const [categories, setCategories] = useState([]);
+	const [catMenuVisible, setCatMenuVisible] = useState(false);
 
 	const { recipe, user } =  route.params;
 
 	const openMenu = () => setMenuVisible(true);
 
   const closeMenu = () => setMenuVisible(false);
+
+  const openCatMenu = () => setMenuVisible(true);
+
+  const closeCatMenu = () => setMenuVisible(false);
 
   const showDialog = () => {
   	closeMenu();
@@ -51,6 +57,36 @@ export default function SingleRecipe({ navigation, route }){
     setEditingRecipe({ ...editingRecipe, [name]: event.target.value });
 
 	};
+
+	useEffect(() => {
+
+		let mounted = true;
+
+		const getCategories = async () => {
+
+			try{
+
+				const response = await API.request('/category', 'get', user.token, null);
+
+				if(mounted){
+
+					setCategories(response.data);
+
+				}
+			}catch(e){
+
+				setLoading({ ...loading, loading : false, 
+					error : `Exception getting categories: ${e.message}.
+					 Reload the page.`});
+			}
+		};
+
+		getCategories();
+
+		//Avoid make changes on unmounted component...
+		return () => mounted = false;
+		
+	}, [editingRecipe]);
 
 	const handleDeleting = async () => {
 
@@ -82,13 +118,26 @@ export default function SingleRecipe({ navigation, route }){
 
 		hideDialog();
 
-		setLoading({ loading : true, act : 'Deleting', error : '' });
+		const operation = recipe.id ? 'updating' : 'creating';
+
+		setLoading({ loading : true, act : operation, error : '' });
 
 		try{
 
-			
-		}catch(e){
+			const path = recipe.id ? `/recipe/${recipe.id}` : '/recipe' ;
 
+			const response = await API.request(path,
+			 recipe.id ? 'put' : 'post', user.token, editingRecipe);
+
+			if(response.data){
+				recipe = response.data;
+			}
+
+			setEditingRecipe(null);
+
+		}catch(e){
+			setLoading({ ...loading, loading : false, 
+				error : `Exception while ${operation} recipe: ${e.message}` });
 		}
 
 	};
@@ -131,6 +180,7 @@ export default function SingleRecipe({ navigation, route }){
 			    		!editingRecipe.title || 
 			    		!editingRecipe.user || 
 			    		!editingRecipe.category ||
+			    		!editingRecipe.description ||
 			    		loading.loading
 			    		}
 							testID="saveButton" style={styles.button}>
@@ -140,7 +190,12 @@ export default function SingleRecipe({ navigation, route }){
 						</Pressable>
 
 	    		</View>
-	    		: <Text>{ recipe.description }</Text>
+	    		: 
+	    		<View>
+	    			<Text selectable={true} testID="descView">
+	    				{ recipe.description }
+	    			</Text>
+	    		</View>
 	    }
 			
 			<Portal>

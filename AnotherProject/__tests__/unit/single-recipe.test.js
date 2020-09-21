@@ -77,6 +77,11 @@ test('Make user\'s recipe editable', async () => {
 
 		await act(async () => {
 
+			/*
+				* The categories must be loaded only when edit mode is selected
+				*/
+			await waitFor(() => getByTestId('categoryList'));
+			
 			const desc = getByTestId('description');
 
 			/*
