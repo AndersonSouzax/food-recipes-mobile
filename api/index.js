@@ -8,18 +8,38 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3030;
 
 const recipes = [
-      { id: 1, title : 'Fish', user : { id: 1 }, category : { id: 1 } },
-      { id: 67, title : 'Sushi', user : { id: 2 }, category : { id: 54 } },
+      { id: 1, title : 'Fish', user : { id: 1 }, 
+        description : 'you got that yummi yummi...',
+        category : { id : 1, name : "Japonese Food", 
+          image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg' 
+        } 
+      },
+      { id: 67, title : 'Sushi', user : { id: 2 },
+        description : 'i can be the one, cause i can be the one...', 
+        category : { id : 1, name : "Japonese Food", 
+          image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg'
+        }
+      },
+      { id: 57, title : 'Perdido', user : { id: 2 },
+        description : `Cuidado pra elas nao te dar perdido e vir aqui me daaaaa. 
+          Amar? amei. Gostar? Gostei, mas agora eu nao quero nem de graaaça`,
+        category : { id : 1, name : "Japonese Food", 
+          image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg'
+        }
+      },
     ];
 
 app.get('/api/v1/recipe', function (req, res) {
- 	
+
  	let user = req.query.user;
+
+  console.log('aaaaaaaaaaaaaaa');
 
  	if(user){
 
- 		res.json([{ id: 67, title : 'Sushi', user : { id: 2 }, 
- 			category : { id: 54 } }]);
+    const id = parseInt(user);
+
+ 		res.json(recipes.filter( x => x.user.id === id));
 
  	}else{
 

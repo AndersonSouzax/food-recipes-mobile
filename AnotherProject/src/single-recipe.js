@@ -88,6 +88,8 @@ export default function SingleRecipe({ navigation, route }){
 		
 	}, [editingRecipe]);
 
+	const chooseCategory = () => 1;
+
 	const handleDeleting = async () => {
 
 		if(loading.loading){ return; }
@@ -175,6 +177,33 @@ export default function SingleRecipe({ navigation, route }){
 	    			<TextInput testID="description" type="flat"
 	    				value={editingRecipe.description} label="Recipe Description"
 	    				multiline={true} onChangeText={handleEditing}/>
+			    	
+			    	<Menu
+						  onDismiss={closeCatMenu}
+						  visible={catMenuVisible}
+						  style={styles.menu}
+						  disabled={!categories || categories.length === 0}
+						  anchor={
+					  	  <Button icon="pen" mode="outlined" onPress={openCatMenu}
+					  	  	testID="catSelectButton">
+  								{ editingRecipe.category ? editingRecipe.category.name : 'Choose a Category' }
+								</Button>
+						   }>
+
+						  {
+						  	categories && categories.length > 0 &&
+						  		(
+						  			categories.map(x => (
+						  				<Menu.Item
+						  					title={x.title} onPress={chooseCategory}
+						  					key={() => '_' + Math.random()
+													.toString(36)
+													.substr(2, 9) 
+						  					}/>
+						  			))
+						  		)
+						  }
+						</Menu>
 
 			    	<Pressable onPress={handleUpdateOrCreate} disabled={
 			    		!editingRecipe.title || 
