@@ -120,10 +120,28 @@ describe('Make user\'s recipe editable correctly', () => {
 				
 				const desc = getByTestId('description');
 
-				/*
-					* Test the informations changing...
-					*/
+				const catSelButton = getByTestId('catSelectButton');
+				const catButtonText = catSelButton.props.children;
 
+				/* Fires the categories loading */
+				fireEvent.press(catSelButton);
+
+				await act(async () => {
+
+					await waitFor(() => getByTestId('cat-0'));
+
+					// First option of category
+					const cat = getByTestId('cat-0');
+					
+					fireEvent.press(cat);
+
+					// await waitFor(
+					// 	getByTestId('catSelectButton')
+					// 	.props
+					// 	.children.toString() === catButtonText
+					// );
+
+				});
 			});
 
 		});

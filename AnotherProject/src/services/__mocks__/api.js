@@ -41,6 +41,12 @@ class API {
 
             resolve({ data : this.recipes.filter( x => x.user.id === userId)[0] });
 
+          }else if(url.includes('category')){
+
+            resolve({ data : 
+              [{ id : 2, name : "Chinese Food",
+                image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg'}]
+              });
           }else{
             resolve( { data: this.recipes } )   
           }

@@ -25,6 +25,7 @@ export default function SingleRecipe({ navigation, route }){
 	const [loading, setLoading] = useState({ loading : false, error : '', act : '' });
 	const [categories, setCategories] = useState([]);
 	const [catMenuVisible, setCatMenuVisible] = useState(false);
+	const [editing, setEditing] = useState(false);
 
 	const { recipe, user } =  route.params;
 
@@ -32,21 +33,22 @@ export default function SingleRecipe({ navigation, route }){
 
   const closeMenu = () => setMenuVisible(false);
 
-  const openCatMenu = () => setMenuVisible(true);
+  const openCatMenu = () => setCatMenuVisible(true);
 
-  const closeCatMenu = () => setMenuVisible(false);
+  const closeCatMenu = () => setCatMenuVisible(false);
 
   const showDialog = () => {
   	closeMenu();
-  	setDialogVisible(true); 
+  	setDialogVisible(true);
   }
 
   const hideDialog = () => setDialogVisible(false);
 
 	const back = () => { navigation.goBack(); };
 
-	const makeEditable = () => { 
+	const makeEditable = () => {
 		closeMenu();
+		setEditing(true);
 		setEditingRecipe(Object.assign({}, recipe));
 	};
 
@@ -59,6 +61,8 @@ export default function SingleRecipe({ navigation, route }){
 	};
 
 	useEffect(() => {
+
+		if(!editing) { return };
 
 		let mounted = true;
 
@@ -74,7 +78,6 @@ export default function SingleRecipe({ navigation, route }){
 
 				}
 			}catch(e){
-
 				setLoading({ ...loading, loading : false, 
 					error : `Exception getting categories: ${e.message}.
 					 Reload the page.`});
@@ -86,9 +89,11 @@ export default function SingleRecipe({ navigation, route }){
 		//Avoid make changes on unmounted component...
 		return () => mounted = false;
 		
-	}, [editingRecipe]);
+	}, [editing]);
 
-	const chooseCategory = () => 1;
+	const chooseCategory = (category) => {
+		setEditingRecipe({ ...editingRecipe, category : category });
+	};
 
 	const handleDeleting = async () => {
 
@@ -184,24 +189,28 @@ export default function SingleRecipe({ navigation, route }){
 						  style={styles.menu}
 						  disabled={!categories || categories.length === 0}
 						  anchor={
-					  	  <Button icon="pen" mode="outlined" onPress={openCatMenu}
+					  	  <Button icon="pen" mode="outlined" onPress={() => openCatMenu()}
 					  	  	testID="catSelectButton">
   								{ editingRecipe.category ? editingRecipe.category.name : 'Choose a Category' }
 								</Button>
 						   }>
 
 						  {
-						  	categories && categories.length > 0 &&
+						  	categories && categories.length > 0 ?
 						  		(
-						  			categories.map(x => (
-						  				<Menu.Item
-						  					title={x.title} onPress={chooseCategory}
+						  			categories.map((x, index) => {
+						  				return (
+						  					<Menu.Item
+						  					testID={"cat-" + index}
+						  					title={x.title} onPress={() => chooseCategory(x)}
 						  					key={() => '_' + Math.random()
 													.toString(36)
-													.substr(2, 9) 
+													.substr(2, 9)
 						  					}/>
-						  			))
+						  				)
+						  			})
 						  		)
+						  		: <></>
 						  }
 						</Menu>
 
