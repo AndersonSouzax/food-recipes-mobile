@@ -15,6 +15,8 @@ import {
 	Appbar, TextInput, Menu, 
 	Dialog, Portal, Paragraph, Button } from 'react-native-paper';
 
+import {Picker} from '@react-native-community/picker';
+
 import API from './services/api';
 
 export default function SingleRecipe({ navigation, route }){
@@ -48,8 +50,8 @@ export default function SingleRecipe({ navigation, route }){
 
 	const makeEditable = () => {
 		closeMenu();
-		setEditing(true);
 		setEditingRecipe(Object.assign({}, recipe));
+		setEditing(true);
 	};
 
 	const handleEditing = (event) => {
@@ -73,7 +75,7 @@ export default function SingleRecipe({ navigation, route }){
 				const response = await API.request('/category', 'get', user.token, null);
 
 				if(mounted){
-
+console.log(response.data);
 					setCategories(response.data);
 
 				}
@@ -91,8 +93,17 @@ export default function SingleRecipe({ navigation, route }){
 		
 	}, [editing]);
 
-	const chooseCategory = (category) => {
-		setEditingRecipe({ ...editingRecipe, category : category });
+	const chooseCategory = (categoryId) => {
+		
+		console.log(categoryId);
+		console.log(categories);
+
+		if(!categories){ return; }
+console.log('choosing category');
+console.log(categories);
+		setEditingRecipe({ ...editingRecipe,
+			category : categories.find(x => x.id === categoryId)
+		});
 	};
 
 	const handleDeleting = async () => {
@@ -175,7 +186,7 @@ export default function SingleRecipe({ navigation, route }){
 	    </Appbar.Header>
 
 	    {
-	    	editingRecipe !== null ? 
+	    	editing ? 
 
 	    		<View style={styles.mainView}>
 
@@ -183,27 +194,26 @@ export default function SingleRecipe({ navigation, route }){
 	    				value={editingRecipe.description} label="Recipe Description"
 	    				multiline={true} onChangeText={handleEditing}/>
 			    	
-			    	<Menu
-						  onDismiss={closeCatMenu}
-						  visible={catMenuVisible}
-						  style={styles.menu}
-						  disabled={!categories || categories.length === 0}
-						  anchor={
-					  	  <Button icon="pen" mode="outlined" onPress={() => openCatMenu()}
-					  	  	testID="catSelectButton">
-  								{ editingRecipe.category ? editingRecipe.category.name : 'Choose a Category' }
-								</Button>
-						   }>
-
+			    	<Picker
+			    		testID="categoryList"
+			    		enabled={categories}
+						  selectedValue={
+						  	editingRecipe.category ? 
+						  		editingRecipe.category.id :
+						  		categories[0].id
+						  }
+						  style={{height: 50, width: 100}}
+						  onValueChange={(itemValue, itemIndex) =>
+						    chooseCategory(itemValue)
+						  }>
 						  {
 						  	categories && categories.length > 0 ?
 						  		(
 						  			categories.map((x, index) => {
 						  				return (
-						  					<Menu.Item
-						  					testID={"cat-" + index}
-						  					title={x.title} onPress={() => chooseCategory(x)}
-						  					key={() => '_' + Math.random()
+						  					<Picker.Item
+						  						label={x.title} value={x.id}
+						  						key={() => '_' + Math.random()
 													.toString(36)
 													.substr(2, 9)
 						  					}/>
@@ -212,7 +222,7 @@ export default function SingleRecipe({ navigation, route }){
 						  		)
 						  		: <></>
 						  }
-						</Menu>
+						</Picker>
 
 			    	<Pressable onPress={handleUpdateOrCreate} disabled={
 			    		!editingRecipe.title || 

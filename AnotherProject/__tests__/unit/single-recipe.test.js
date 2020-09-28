@@ -120,26 +120,17 @@ describe('Make user\'s recipe editable correctly', () => {
 				
 				const desc = getByTestId('description');
 
-				const catSelButton = getByTestId('catSelectButton');
-				const catButtonText = catSelButton.props.children;
+				const categoriesList = getByTestId('categoryList');
+				
+				const selectedCat = categoriesList.props.selectedValue;
 
 				/* Fires the categories loading */
-				fireEvent.press(catSelButton);
-
+				fireEvent(categoriesList, 'onValueChange', 2 );
+/* Fix useefect of categories... */
 				await act(async () => {
 
-					await waitFor(() => getByTestId('cat-0'));
-
-					// First option of category
-					const cat = getByTestId('cat-0');
-					
-					fireEvent.press(cat);
-
-					// await waitFor(
-					// 	getByTestId('catSelectButton')
-					// 	.props
-					// 	.children.toString() === catButtonText
-					// );
+					expect(getByTestId('categoryList').props.selectedValue)
+						.not.toBe(selectedCat);
 
 				});
 			});

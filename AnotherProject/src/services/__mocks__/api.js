@@ -45,6 +45,8 @@ class API {
 
             resolve({ data : 
               [{ id : 2, name : "Chinese Food",
+                image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg'},
+                { id : 1, name : "Japonese Food", 
                 image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg'}]
               });
           }else{
