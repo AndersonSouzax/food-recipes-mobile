@@ -28,8 +28,8 @@ export default function SingleRecipe({ navigation, route }){
 	const [categories, setCategories] = useState([]);
 	const [catMenuVisible, setCatMenuVisible] = useState(false);
 	const [editing, setEditing] = useState(false);
-
-	const { recipe, user } =  route.params;
+	const [recipe, setRecipe] = useState(route.params.recipe);
+	const [user, setUser] = useState(route.params.user);
 
 	const openMenu = () => setMenuVisible(true);
 
@@ -75,7 +75,7 @@ export default function SingleRecipe({ navigation, route }){
 				const response = await API.request('/category', 'get', user.token, null);
 
 				if(mounted){
-console.log(response.data);
+
 					setCategories(response.data);
 
 				}
@@ -94,13 +94,9 @@ console.log(response.data);
 	}, [editing]);
 
 	const chooseCategory = (categoryId) => {
-		
-		console.log(categoryId);
-		console.log(categories);
 
 		if(!categories){ return; }
-console.log('choosing category');
-console.log(categories);
+
 		setEditingRecipe({ ...editingRecipe,
 			category : categories.find(x => x.id === categoryId)
 		});
@@ -148,10 +144,10 @@ console.log(categories);
 			 recipe.id ? 'put' : 'post', user.token, editingRecipe);
 
 			if(response.data){
-				recipe = response.data;
+				setRecipe(response.data);
 			}
 
-			setEditingRecipe(null);
+			setEditing(false);
 
 		}catch(e){
 			setLoading({ ...loading, loading : false, 

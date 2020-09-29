@@ -122,17 +122,22 @@ describe('Make user\'s recipe editable correctly', () => {
 
 				const categoriesList = getByTestId('categoryList');
 				
-				const selectedCat = categoriesList.props.selectedValue;
+				// Wait until the categories are loaded
+				await waitFor(() => categoriesList.props.enabled);
+
+				const selectedCat = categoriesList.props.selectedIndex;
 
 				/* Fires the categories loading */
 				fireEvent(categoriesList, 'onValueChange', 2 );
-/* Fix useefect of categories... */
+
 				await act(async () => {
 
-					expect(getByTestId('categoryList').props.selectedValue)
-						.not.toBe(selectedCat);
+					expect(
+						getByTestId('categoryList').props.selectedIndex
+					).not.toBe(selectedCat);
 
 				});
+				
 			});
 
 		});
