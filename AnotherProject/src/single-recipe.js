@@ -46,6 +46,8 @@ export default function SingleRecipe({ navigation, route }){
 
   const hideDialog = () => setDialogVisible(false);
 
+	const cancelEdit = () => setEditing(false);
+
 	const back = () => { navigation.goBack(); };
 
 	const makeEditable = () => {
@@ -130,8 +132,6 @@ export default function SingleRecipe({ navigation, route }){
 
 	const handleUpdateOrCreate = async () => {
 
-		hideDialog();
-
 		const operation = recipe.id ? 'updating' : 'creating';
 
 		setLoading({ loading : true, act : operation, error : '' });
@@ -180,15 +180,28 @@ export default function SingleRecipe({ navigation, route }){
 				</Menu>
 
 	    </Appbar.Header>
+			
+			{
+				loading.error ? 
+					<Text testID="errorText"> {loading.error} </Text> 
+				: <></>
+			}
 
 	    {
 	    	editing ? 
 
 	    		<View style={styles.mainView}>
 
-	    			<TextInput testID="description" type="flat"
-	    				value={editingRecipe.description} label="Recipe Description"
-	    				multiline={true} onChangeText={handleEditing}/>
+			    	<Pressable onPress={() => cancelEdit() }
+							testID="cancelEditButton" style={styles.button}>
+							
+							<Text style={styles.buttonTxt}>Cancel</Text>
+
+						</Pressable>
+
+	    			<TextInput testID="title" type="flat"
+	    				value={editingRecipe.title} label="Recipe Title" 
+	    				onChangeText={handleEditing}/>
 			    	
 			    	<Picker
 			    		testID="categoryList"
@@ -220,7 +233,11 @@ export default function SingleRecipe({ navigation, route }){
 						  }
 						</Picker>
 
-			    	<Pressable onPress={handleUpdateOrCreate} disabled={
+	    			<TextInput testID="description" type="flat"
+	    				value={editingRecipe.description} label="Recipe Description"
+	    				multiline={true} onChangeText={handleEditing}/>
+
+			    	<Pressable onPress={() => handleUpdateOrCreate()} disabled={
 			    		!editingRecipe.title || 
 			    		!editingRecipe.user || 
 			    		!editingRecipe.category ||

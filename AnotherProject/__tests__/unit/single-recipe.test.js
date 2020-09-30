@@ -67,7 +67,7 @@ describe('Make user\'s recipe editable correctly', () => {
 
 	});
 
-	test('Text inputs working correctly', async() => {
+	test('Text inputs work correctly', async() => {
 		
 		const { getByTestId } = component;
 
@@ -100,7 +100,7 @@ describe('Make user\'s recipe editable correctly', () => {
 
 	});
 
-	test('Loading categories correctly', async () => {
+	test('The categories are loaded correctly', async () => {
 
 		const { getByTestId } = component;
 
@@ -143,6 +143,49 @@ describe('Make user\'s recipe editable correctly', () => {
 		});
 
 	});
+
+  test('Cancels the editing correctly', async() => {
+		
+    const { getByTestId, queryByTestId } = component;
+
+    const options = getByTestId('options');
+
+    fireEvent.press(options);
+
+    await act(async () => {	
+
+      await waitFor(() => getByTestId('editReciple'));
+			
+      const editButton = getByTestId('editReciple');
+
+      fireEvent.press(editButton);
+
+      await act(async () => {
+				
+        const cancelButton = getByTestId('cancelEditButton');
+
+        fireEvent.press(cancelButton);
+				
+        /* Ensuring that all elements for editing are hidden after cancellation */
+        await waitForElementToBeRemoved(() => getByTestId('cancelEditButton'));
+
+        const description = queryByTestId('description');
+        const title = queryByTestId('title');
+        const categories = queryByTestId('categoryList');
+        const saveButton = queryByTestId('saveButton');
+				
+        const elementsAreVisible = description 
+          || title 
+          || categories 
+          || saveButton;
+
+        expect(elementsAreVisible).toBeFalsy();
+
+      });
+
+    });
+
+  });
 
 });
 
@@ -194,44 +237,69 @@ test('Deleting recipe correctly', async () => {
 	});
 });
 
-// test('Updating recipe correctly', async () => {
-// 
-// 	const component = render(
-// 		<PaperProvider>
-// 			<SingleRecipe route={mockRoute} />
-// 		</PaperProvider>
-// 	);
-// 
-// 	const { getByTestId } = component;
-// 
-// 	const options = getByTestId('options');
-// 
-// 	const saveButton = getByTestId('saveButton');
-// 
-// 	fireEvent.press(options);
-// 
-// 	await waitFor(() => getByTestId('editReciple'));
-// 	
-// 	const editButton = getByTestId('editReciple');
-// 
-// 	fireEvent.press(editButton);
-// 
-// 	await waitFor(() => getByTestId('description'));
-// 
-// 	const desc = getByTestId('description');
-// 
-// 	const event = { target : { testID : 'description', value : 'loveyou' } };
-// 
-// 	fireEvent.changeText(desc, event);
-// 	
-// 	await waitFor(() => getByTestId('description').props.value === 'loveyou');
-// 	
-// 	await fireEvent.press(saveButton);
-// 
-// 	/* The value of view description must be the same that was inserted during editing */
-// 	await waitFor(() => getByTestId('descView').props.value === 'loveyou');
-// 
-// });
+/*
+* This test is too weak because there's no assertion on API step...
+* 
+*/
+test('Updating recipe correctly', async () => {
+
+	const component = render(
+		<PaperProvider>
+			<SingleRecipe route={mockRoute} />
+		</PaperProvider>
+	);
+
+	const { getByTestId } = component;
+
+	const options = getByTestId('options');
+
+	fireEvent.press(options);
+
+	await act(async () => {
+
+		await waitFor(() => getByTestId('editReciple'));
+
+		const editButton = getByTestId('editReciple');
+
+		fireEvent.press(editButton);
+
+		//await act(async () => {
+
+			await waitFor(() => getByTestId('description'));
+
+			const saveButton = getByTestId('saveButton');
+
+			const desc = getByTestId('description');
+
+			const event = { target : { testID : 'description', value : 'loveyou' } };
+
+			fireEvent.changeText(desc, event);
+			
+			//await act(async () => {
+
+				await waitFor(() => getByTestId('description').props.value === 'loveyou');
+				
+				await fireEvent.press(saveButton);
+
+				//await act(async () => {
+
+					/* The value of view description must be the same that was inserted during editing */
+					const description = getByTestId('descView');
+
+					//await waitFor(() => description.props.children === 'loveyoukkk');
+
+					expect(description.props.children).toBe('loveyou');
+
+
+				//});
+
+			//});
+
+		//});
+
+	});
+
+});
 
 
 

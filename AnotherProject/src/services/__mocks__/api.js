@@ -9,8 +9,10 @@ class API {
     };
 
     this.recipes = [
-      { id: 1, title : 'Fish', user : { id: 1 }, category : { id: 1 } },
-      { id: 67, title : 'Sushi', user : { id: 2 }, category : { id: 54 } },
+      { id: 1, title : 'Fish', user : { id: 1 }, category : { id: 1 },
+        description : 'aaaaaaaaaaaaaaaaa' },
+      { id: 67, title : 'Sushi', user : { id: 2 }, category : { id: 54 },
+        description : 'aaaaaaaaaaaaaaa' },
     ];
   }
 
@@ -39,7 +41,15 @@ class API {
 
           }else if(method === 'put' || method === 'post' ){
 
-            resolve({ data : this.recipes.filter( x => x.user.id === userId)[0] });
+            const userId = informations.user.id;
+
+            const resp = this.recipes.filter( x => x.user.id === userId)[0];
+
+            if(resp && informations.description){ 
+              resp.description = informations.description;
+            }
+            
+            resolve({ data : resp });
 
           }else if(url.includes('category')){
 
