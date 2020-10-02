@@ -41,7 +41,7 @@ class API {
 
           }else if(method === 'put' || method === 'post' ){
 
-            const userId = informations.user.id;
+            const userId = informations.user;
 
             const resp = this.recipes.filter( x => x.user.id === userId)[0];
 

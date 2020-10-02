@@ -84,7 +84,9 @@ describe('Make user\'s recipe editable correctly', () => {
 			fireEvent.press(editButton);
 
 			await act(async () => {
-				
+
+				expect(options.props.accessibilityState.disabled).toBe(true);
+
 				const desc = getByTestId('description');
 
 				const event = { target : { testID : 'description', value : 'loveyou' } };

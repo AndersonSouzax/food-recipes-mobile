@@ -7,13 +7,14 @@ import {
 	Text, 
 	StatusBar,
 	Pressable,
+	ScrollView
 } from 'react-native';
 
 import { button, buttonTxt } from './styles';
 
 import { 
 	Appbar, TextInput, Menu, 
-	Dialog, Portal, Paragraph, Button } from 'react-native-paper';
+	Dialog, Portal, Paragraph, Button, Card, Title } from 'react-native-paper';
 
 import {Picker} from '@react-native-community/picker';
 
@@ -56,13 +57,11 @@ export default function SingleRecipe({ navigation, route }){
 		setEditing(true);
 	};
 
-	const handleEditing = (event) => {
+	const titleHandleEditing = text => 
+	  setEditingRecipe({ ...editingRecipe, title : text });
 
-    const name = event.target.testID;
-
-    setEditingRecipe({ ...editingRecipe, [name]: event.target.value });
-
-	};
+  const descriptionHandleEditing = text => 
+    setEditingRecipe({ ...editingRecipe, description : text });
 
 	useEffect(() => {
 
@@ -78,8 +77,11 @@ export default function SingleRecipe({ navigation, route }){
 
 				if(mounted){
 
-					setCategories(response.data);
-
+					if(response.data){
+					  setCategories(response.data);	
+					}else{
+						throw new Error('No Categories Received');
+					}
 				}
 			}catch(e){
 				setLoading({ ...loading, loading : false, 
@@ -97,7 +99,7 @@ export default function SingleRecipe({ navigation, route }){
 
 	const chooseCategory = (categoryId) => {
 
-		if(!categories){ return; }
+		if(!categories || categories.length === 0){ return; }
 
 		setEditingRecipe({ ...editingRecipe,
 			category : categories.find(x => x.id === categoryId)
@@ -140,9 +142,18 @@ export default function SingleRecipe({ navigation, route }){
 
 			const path = recipe.id ? `/recipe/${recipe.id}` : '/recipe' ;
 
-			const response = await API.request(path,
-			 recipe.id ? 'put' : 'post', user.token, editingRecipe);
+			const informations = {};
 
+			informations.category = editingRecipe.category.id;
+			informations.user = user.id;
+			informations.title = editingRecipe.title;
+			informations.description = editingRecipe.description;
+
+			const response = await API.request(path,
+			 recipe.id ? 'put' : 'post', user.token, informations);
+
+			setLoading({ loading : false, error : '' });
+			
 			if(response.data){
 				setRecipe(response.data);
 			}
@@ -156,6 +167,8 @@ export default function SingleRecipe({ navigation, route }){
 
 	};
 
+	let thereIsCategories = categories && categories.length > 0;
+
 	return (
 		<>
 
@@ -168,10 +181,10 @@ export default function SingleRecipe({ navigation, route }){
 				  onDismiss={closeMenu}
 				  visible={menuVisible}
 				  style={styles.menu}
-				  disabled={editingRecipe !== null}
 				  anchor={
 	    			<Appbar.Action testID="options" icon="dots-vertical"
-	    				onPress={openMenu} />
+	    				onPress={openMenu} style={styles.moreActions}
+	    				disabled={editing}/>
 				   }>
 				  <Menu.Item testID="editReciple" icon="pen"
 				  	title="Edit Recipe" onPress={makeEditable} />
@@ -190,52 +203,55 @@ export default function SingleRecipe({ navigation, route }){
 	    {
 	    	editing ? 
 
-	    		<View style={styles.mainView}>
+	    		<View style={styles.mainEditView}>
 
 			    	<Pressable onPress={() => cancelEdit() }
-							testID="cancelEditButton" style={styles.button}>
+							testID="cancelEditButton" style={styles.cancel}>
 							
-							<Text style={styles.buttonTxt}>Cancel</Text>
+							<Text style={styles.cancelTxt}>Cancel</Text>
 
 						</Pressable>
 
-	    			<TextInput testID="title" type="flat"
+	    			<TextInput testID="title" type="outlined"
 	    				value={editingRecipe.title} label="Recipe Title" 
-	    				onChangeText={handleEditing}/>
+	    				onChangeText={titleHandleEditing} style={styles.textArea}/>
 			    	
+			    	<Text style={{ alignSelf: 'center', color: '#EA1D2C' }}>Category: </Text>
+
 			    	<Picker
 			    		testID="categoryList"
-			    		enabled={categories}
-						  selectedValue={
-						  	editingRecipe.category ? 
-						  		editingRecipe.category.id :
-						  		categories[0].id
+			    		enabled={thereIsCategories}
+						  style={styles.picker}
+						  selectedValue={ 
+						  	thereIsCategories ? 
+						  	  editingRecipe.category ? 
+						  	    editingRecipe.category.id : categories[0].id
+						  	: 0
 						  }
-						  style={{height: 50, width: 100}}
 						  onValueChange={(itemValue, itemIndex) =>
 						    chooseCategory(itemValue)
 						  }>
 						  {
-						  	categories && categories.length > 0 ?
-						  		(
-						  			categories.map((x, index) => {
-						  				return (
-						  					<Picker.Item
-						  						label={x.title} value={x.id}
-						  						key={() => '_' + Math.random()
-													.toString(36)
-													.substr(2, 9)
-						  					}/>
-						  				)
-						  			})
-						  		)
-						  		: <></>
+						  	thereIsCategories ? 
+
+					  	 	  categories.map((cat) => (
+                    <Picker.Item
+					  					label={cat.name} value={cat.id}
+					  					key={() => '_' + Math.random()
+											.toString(36)
+											.substr(2, 9)
+					  				}/>
+					  			 )) 
+					  	 	 :
+
+						  	 <Picker.Item label="No Category" value={0}/>
 						  }
 						</Picker>
 
-	    			<TextInput testID="description" type="flat"
+	    			<TextInput testID="description" type="outlined"
 	    				value={editingRecipe.description} label="Recipe Description"
-	    				multiline={true} onChangeText={handleEditing}/>
+	    				multiline={true} onChangeText={descriptionHandleEditing} 
+	    				style={styles.textArea}/>
 
 			    	<Pressable onPress={() => handleUpdateOrCreate()} disabled={
 			    		!editingRecipe.title || 
@@ -252,10 +268,25 @@ export default function SingleRecipe({ navigation, route }){
 
 	    		</View>
 	    		: 
-	    		<View>
+	    		<View style={styles.mainView}>
+
+	    			<Text selectable={true}>
+	    				{ recipe.title }
+	    			</Text>
+
+	    			<Text>
+	    				Category: { recipe.category ?  recipe.category.name : 'No category' }
+	    			</Text>
+
+   			  	<Card style={styles.card}>
+ 				    	<Card.Cover source={ recipe.category && recipe.category.image ? 
+ 				    		{ uri: recipe.category.image } : require('./images/default_recipe.png') } />
+ 				  	</Card>
+
 	    			<Text selectable={true} testID="descView">
 	    				{ recipe.description }
 	    			</Text>
+
 	    		</View>
 	    }
 			
@@ -285,13 +316,51 @@ export default function SingleRecipe({ navigation, route }){
 }
 
 const styles = StyleSheet.create({
+	button : { 
+		...button,
+		position: 'relative',
+		top: 30
+	},
+	cancel : {
+		alignSelf : 'flex-end',
+		marginBottom: 30,
+		marginTop: 10
+	},
+	cancelTxt: {
+		color : 'black',
+		fontWeight: 'bold',
+	  fontSize: 16,
+	  textAlign: 'center',
+	},
+	buttonTxt: buttonTxt,
   appBar: {
   	backgroundColor: '#EA1D2C',
+  	justifyContent : 'space-between'
   },
   menu : {
     marginTop: '14%',
   },
   mainView:{
-
+  	alignItems: 'center'
+  },
+  mainEditView: {
+  	justifyContent : 'center',
+  	padding: 10,
+  },
+  moreActions : {
+  	color : 'white',
+  },
+  card : {
+  	width : '80%'
+  },
+  textArea : {
+  	backgroundColor: 'white',
+  	marginBottom : 5
+  },
+  picker : {
+  	height : 50,
+  	width : '50%',
+  	alignSelf: 'center',
+  	marginVertical: 10,
   }
 });
