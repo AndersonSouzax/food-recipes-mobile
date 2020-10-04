@@ -9,9 +9,13 @@ class API {
     };
 
     this.recipes = [
-      { id: 1, title : 'Fish', user : { id: 1 }, category : { id: 1 },
+      { id: 1, title : 'Fish', user : { id: 1 }, 
+        category : { id: 1, name: 'Japonese Food', 
+         image: 'https://livingnomads.com/wp-content/uploads/2018/03/18/taiwanese-beef-noodle-soup.jpg' 
+        }, 
         description : 'aaaaaaaaaaaaaaaaa' },
-      { id: 67, title : 'Sushi', user : { id: 2 }, category : { id: 54 },
+      { id: 67, title : 'Sushi', user : { id: 2 },
+        category : { id: 54,  name : 'Taiwan Food'},
         description : 'aaaaaaaaaaaaaaa' },
     ];
   }

@@ -134,33 +134,36 @@ export default function SingleRecipe({ navigation, route }){
 
 	const handleUpdateOrCreate = async () => {
 
-		const operation = recipe.id ? 'updating' : 'creating';
+		const operation = editingRecipe.id ? 'updating' : 'creating';
 
 		setLoading({ loading : true, act : operation, error : '' });
 
 		try{
 
-			const path = recipe.id ? `/recipe/${recipe.id}` : '/recipe' ;
+			const path = editingRecipe.id ? `/recipe/${editingRecipe.id}` : '/recipe';
 
-			const informations = {};
-
-			informations.category = editingRecipe.category.id;
+			const informations = Object.assign({}, editingRecipe);
 			informations.user = user.id;
-			informations.title = editingRecipe.title;
-			informations.description = editingRecipe.description;
+			informations.category = editingRecipe.category.id;
 
 			const response = await API.request(path,
-			 recipe.id ? 'put' : 'post', user.token, informations);
-
-			setLoading({ loading : false, error : '' });
+			 editingRecipe.id ? 'put' : 'post', user.token, informations);
 			
+			const message = '';
+
 			if(response.data){
 				setRecipe(response.data);
+			}else{
+				message = `${operation} operation succeeded, 
+				  but the saved recipe wasn't sent as a response`;
 			}
+
+			setLoading({ loading : false, error : message });
 
 			setEditing(false);
 
 		}catch(e){
+			console.log(e.message);
 			setLoading({ ...loading, loading : false, 
 				error : `Exception while ${operation} recipe: ${e.message}` });
 		}
@@ -176,21 +179,28 @@ export default function SingleRecipe({ navigation, route }){
 
 	    	<Appbar.BackAction testID="backButton" onPress={() => { back(); }} />
 
+	    	{
 
-	    	<Menu
-				  onDismiss={closeMenu}
-				  visible={menuVisible}
-				  style={styles.menu}
-				  anchor={
-	    			<Appbar.Action testID="options" icon="dots-vertical"
-	    				onPress={openMenu} style={styles.moreActions}
-	    				disabled={editing}/>
-				   }>
-				  <Menu.Item testID="editReciple" icon="pen"
-				  	title="Edit Recipe" onPress={makeEditable} />
-				  <Menu.Item testID="deleteReciple" icon="fruit-cherries-off"
-				  	title="Delete Recipe" onPress={showDialog} />
-				</Menu>
+	    		user.id === recipe.user.id ?
+
+			    	<Menu
+						  onDismiss={closeMenu}
+						  visible={menuVisible}
+						  style={styles.menu}
+						  anchor={
+			    			<Appbar.Action testID="options" icon="dots-vertical"
+			    				onPress={openMenu} style={styles.moreActions}
+			    				disabled={editing}/>
+						   }>
+						  <Menu.Item testID="editReciple" icon="pen"
+						  	title="Edit Recipe" onPress={makeEditable} />
+						  <Menu.Item testID="deleteReciple" icon="fruit-cherries-off"
+						  	title="Delete Recipe" onPress={showDialog} />
+						</Menu>
+
+	    		: <></>
+	    	}
+
 
 	    </Appbar.Header>
 			
@@ -250,7 +260,7 @@ export default function SingleRecipe({ navigation, route }){
 
 	    			<TextInput testID="description" type="outlined"
 	    				value={editingRecipe.description} label="Recipe Description"
-	    				multiline={true} onChangeText={descriptionHandleEditing} 
+	    				multiline={true} onChangeText={descriptionHandleEditing}
 	    				style={styles.textArea}/>
 
 			    	<Pressable onPress={() => handleUpdateOrCreate()} disabled={
@@ -270,12 +280,12 @@ export default function SingleRecipe({ navigation, route }){
 	    		: 
 	    		<View style={styles.mainView}>
 
-	    			<Text selectable={true}>
+	    			<Text selectable={true} style={styles.recTitle}>
 	    				{ recipe.title }
 	    			</Text>
 
-	    			<Text>
-	    				Category: { recipe.category ?  recipe.category.name : 'No category' }
+	    			<Text style={styles.categoryName}>
+	    				{ recipe.category ? recipe.category.name : 'No category' }
 	    			</Text>
 
    			  	<Card style={styles.card}>
@@ -283,7 +293,8 @@ export default function SingleRecipe({ navigation, route }){
  				    		{ uri: recipe.category.image } : require('./images/default_recipe.png') } />
  				  	</Card>
 
-	    			<Text selectable={true} testID="descView">
+	    			<Text selectable={true} testID="descView" 
+	    				style={styles.recDescription}>
 	    				{ recipe.description }
 	    			</Text>
 
@@ -332,6 +343,22 @@ const styles = StyleSheet.create({
 	  fontSize: 16,
 	  textAlign: 'center',
 	},
+	recTitle:{
+		fontWeight: 'bold',
+		fontSize: 24,
+		margin: 5,
+	},
+	categoryName: {
+		fontSize: 16,
+		marginVertical: 10,
+		fontWeight: 'bold',
+		color: '#EA1D2C'
+	},
+	recDescription:{
+		fontSize: 16,
+		marginTop: 10,
+		width: '90%'
+	},
 	buttonTxt: buttonTxt,
   appBar: {
   	backgroundColor: '#EA1D2C',
@@ -341,7 +368,8 @@ const styles = StyleSheet.create({
     marginTop: '14%',
   },
   mainView:{
-  	alignItems: 'center'
+  	alignItems: 'center',
+  	marginTop: 7
   },
   mainEditView: {
   	justifyContent : 'center',
@@ -351,7 +379,7 @@ const styles = StyleSheet.create({
   	color : 'white',
   },
   card : {
-  	width : '80%'
+  	width : '90%'
   },
   textArea : {
   	backgroundColor: 'white',

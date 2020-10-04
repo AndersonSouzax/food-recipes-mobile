@@ -67,6 +67,34 @@ describe('Make user\'s recipe editable correctly', () => {
 
 	});
 
+	test('Only the recipe\'s creator are allowed to make changes', async () => {
+
+		const otherUserMock = {
+			params: { 
+				recipe : { id: 1, title : 'Fish', user : { id: 1 },
+		      description : 'you got that yummi yummi...',
+		      category : { id : 1, name : "Japonese Food", 
+		          image : 'https://upload.wikimedia.org/wikipedia/commons/5/57/Oseti.jpg' 
+		      } 
+		    },
+		    user : { id : 2 }
+		  }
+		}
+
+		const otherComponent = render(
+			<PaperProvider>
+				<SingleRecipe route={otherUserMock} />
+			</PaperProvider>
+		);
+
+    const { update, queryByTestId } = otherComponent;
+
+		const RecipeOptions = queryByTestId('options');
+
+		expect(RecipeOptions).toBeNull();
+
+	});
+
 	test('Text inputs work correctly', async() => {
 		
 		const { getByTestId } = component;
@@ -89,12 +117,9 @@ describe('Make user\'s recipe editable correctly', () => {
 
 				const desc = getByTestId('description');
 
-				const event = { target : { testID : 'description', value : 'loveyou' } };
-
-				fireEvent.changeText(desc, event);
+				fireEvent.changeText(desc, 'loveyou');
 				
 				await waitFor(() => getByTestId('description').props.value === 'loveyou');
-
 
 			});
 
@@ -133,11 +158,9 @@ describe('Make user\'s recipe editable correctly', () => {
 				fireEvent(categoriesList, 'onValueChange', 2 );
 
 				await act(async () => {
-
 					expect(
 						getByTestId('categoryList').props.selectedIndex
 					).not.toBe(selectedCat);
-
 				});
 				
 			});
@@ -273,9 +296,7 @@ test('Updating recipe correctly', async () => {
 
 			const desc = getByTestId('description');
 
-			const event = { target : { testID : 'description', value : 'loveyou' } };
-
-			fireEvent.changeText(desc, event);
+			fireEvent.changeText(desc, 'loveyou');
 			
 			//await act(async () => {
 
